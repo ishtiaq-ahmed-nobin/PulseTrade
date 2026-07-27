@@ -35,7 +35,8 @@
                                         <div class="flex items-center gap-3">
                                             @if($item->product?->image)
                                                 <div class="w-10 h-10 rounded-lg overflow-hidden bg-ivory shrink-0">
-                                                    <img src="{{ $item->product->image_url }}" class="w-full h-full object-cover">
+                                                    <img src="{{ $item->product->image_url }}" class="w-full h-full object-cover"
+                                                         onerror="this.onerror=null;this.src='{{ \App\Models\Product::fallbackImageUrl() }}';">
                                                 </div>
                                             @endif
                                             <div>

@@ -104,110 +104,100 @@ class DatabaseSeeder extends Seeder
                 'category_index' => 0, 'name' => 'PulseBook Pro 16',
                 'description' => 'The ultimate notebook for professionals. M3-equivalent octa-core processor, 32GB unified memory, and 1TB SSD. 16-inch Liquid Retina XDR display with 1600 nits brightness. Six-speaker sound system and 22-hour battery.',
                 'price' => 2499.00, 'sale_price' => 2299.00, 'stock' => 15, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 0, 'name' => 'PulseBook Air 13',
                 'description' => 'Superlight. Supercharged. 13.6-inch Liquid Retina display, fanless design, 18-hour battery. Perfect for students and developers.',
                 'price' => 1099.00, 'sale_price' => null, 'stock' => 30, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 1, 'name' => 'PulsePhone 15 Ultra',
                 'description' => 'Aerospace-grade titanium. A17 Pro-equivalent chip, customizable Action button, powerful zoom camera system. Super Retina XDR with ProMotion 120Hz.',
                 'price' => 1199.00, 'sale_price' => 1099.00, 'stock' => 25, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 1, 'name' => 'PulseTab Pro 11',
                 'description' => 'Next-gen performance, ultra-thin. Tandem OLED display, ultra-wide Center Stage camera, 5G. Supports precision digital stylus.',
                 'price' => 899.00, 'sale_price' => null, 'stock' => 20, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 2, 'name' => 'PulseBuds Pro 2',
                 'description' => 'Richer audio, 2x Active Noise Cancellation. Adaptive Audio, Spatial Audio for deeply personal immersion.',
                 'price' => 249.00, 'sale_price' => 219.00, 'stock' => 100, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1572569979132-b4f10c9ec185?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 2, 'name' => 'PulseMax Studio Wireless',
                 'description' => 'Over-ear headphones reimagined. Uncompromising fit, optimal acoustic seal, high-fidelity custom drivers.',
                 'price' => 549.00, 'sale_price' => 499.00, 'stock' => 12, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 3, 'name' => 'PulseWatch Active 4',
                 'description' => 'Health companion. Blood oxygen, ECG, precision GPS, always-on OLED, aluminum casing, contactless payment.',
                 'price' => 399.00, 'sale_price' => null, 'stock' => 45, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1723622555972-37af178c623a?auto=format&fit=crop&w=1200&q=80',
             ],
             // --- 10 New Products ---
             [
                 'category_index' => 0, 'name' => 'PulseBook Studio 14',
                 'description' => 'Built for creators. 14-inch mini-LED display with P3 wide color, M3 Pro chip, 18GB memory. Up to 17 hours battery. MagSafe charging, six-speaker system with spatial audio.',
                 'price' => 1999.00, 'sale_price' => 1799.00, 'stock' => 18, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 0, 'name' => 'PulseDesk Mini',
                 'description' => 'M3 chip desktop powerhouse in a compact design. 16GB unified memory, 512GB SSD, Wi-Fi 6E. Connect up to two displays. Perfect for home office setups.',
                 'price' => 799.00, 'sale_price' => null, 'stock' => 40, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 1, 'name' => 'PulsePhone 15',
                 'description' => 'The standard redefined. A17 chip, 48MP main camera, Ceramic Shield front. 6.1-inch Super Retina XDR display. All-day battery life and 5G.',
                 'price' => 899.00, 'sale_price' => 799.00, 'stock' => 35, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 1, 'name' => 'PulsePad Air',
                 'description' => 'Lightweight powerhouse. 10.9-inch Liquid Retina display, M2 chip, Touch ID. Wi-Fi 6 and 5G optional. Works with Apple Pencil and Magic Keyboard.',
                 'price' => 649.00, 'sale_price' => null, 'stock' => 28, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 2, 'name' => 'PulseBuds 3',
                 'description' => 'Everyday earbuds elevated. Active Noise Cancellation, Transparency mode, personalized spatial audio. 6-hour listening time, 30 hours with case.',
                 'price' => 179.00, 'sale_price' => 159.00, 'stock' => 80, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 2, 'name' => 'PulseSound Bar',
                 'description' => 'Cinematic sound for your living room. Dolby Atmos, room-filling sound with seven drivers. Works with all your devices via HDMI eARC, Wi-Fi, Bluetooth.',
                 'price' => 699.00, 'sale_price' => 599.00, 'stock' => 15, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 3, 'name' => 'PulseWatch Ultra 2',
                 'description' => 'The most rugged and capable smartwatch. 49mm titanium case, 2000-nit display, precision dual-frequency GPS. Depth gauge, water temperature, 36-hour battery.',
                 'price' => 799.00, 'sale_price' => null, 'stock' => 20, 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 3, 'name' => 'PulseBand SE',
                 'description' => 'Fitness meets affordability. Heart rate monitoring, sleep tracking, 18 types of workouts. Water resistant to 50m. 15-day battery life.',
                 'price' => 149.00, 'sale_price' => 129.00, 'stock' => 60, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 4, 'name' => 'PulseChargPro 140W',
                 'description' => 'Charge everything at once. 140W GaN charger with 4 ports (2 USB-C, 2 USB-A). Compact design, foldable prongs. Charges MacBook Pro, iPhone, and iPad simultaneously.',
                 'price' => 89.00, 'sale_price' => 69.00, 'stock' => 120, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1200&q=80',
             ],
             [
                 'category_index' => 4, 'name' => 'PulseHub Ultra',
                 'description' => '11-in-1 USB-C hub. Dual HDMI 4K@60Hz, Ethernet, SD card, USB-A 3.0 ports, 100W passthrough charging. Aluminum body with built-in cable.',
                 'price' => 129.00, 'sale_price' => null, 'stock' => 65, 'is_featured' => false,
-                'image' => 'https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=1200&q=80',
             ],
         ];
 
         foreach ($products as $prod) {
+            $slug = Str::slug($prod['name']);
+            $gallery = collect([
+                "https://picsum.photos/seed/{$slug}/600/600",
+                "https://picsum.photos/seed/{$slug}-2/600/600",
+                "https://picsum.photos/seed/{$slug}-3/600/600",
+            ]);
+
             $product = Product::updateOrCreate(
-                ['slug' => Str::slug($prod['name'])],
+                ['slug' => $slug],
                 [
                     'category_id' => $categoryModels[$prod['category_index']]->id,
                     'name' => $prod['name'],
@@ -215,8 +205,8 @@ class DatabaseSeeder extends Seeder
                     'price' => $prod['price'],
                     'sale_price' => $prod['sale_price'],
                     'stock' => $prod['stock'],
-                    'image' => $prod['image'],
-                    'images' => json_encode([$prod['image']]),
+                    'image' => $gallery->first(),
+                    'images' => $gallery->toArray(),
                     'is_featured' => $prod['is_featured'],
                 ]
             );

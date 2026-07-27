@@ -50,7 +50,9 @@ class CartController extends Controller
 
         Session::put('cart', $cart);
 
-        return back()->with('success', 'Product added to cart.');
+        return back()
+            ->with('success', 'Product added to cart.')
+            ->with('open_cart', true);
     }
 
     public function update(Request $request, string $productId)
@@ -64,7 +66,9 @@ class CartController extends Controller
 
         Session::put('cart', $cart);
 
-        return back()->with('success', 'Cart updated.');
+        return back()
+            ->with('success', 'Cart updated.')
+            ->with('open_cart', true);
     }
 
     public function destroy(string $productId)
@@ -74,6 +78,8 @@ class CartController extends Controller
 
         Session::put('cart', $cart);
 
-        return back()->with('success', 'Item removed from cart.');
+        return back()
+            ->with('success', 'Item removed from cart.')
+            ->with('open_cart', true);
     }
 }

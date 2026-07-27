@@ -1,3 +1,29 @@
+@php
+    $cart = session('cart', []);
+    $cartItems = [];
+    $cartSubtotal = 0;
+    $fallbackImage = \App\Models\Product::fallbackImageUrl();
+
+    foreach ($cart as $productId => $qty) {
+        $cartProduct = \App\Models\Product::find($productId);
+
+        if ($cartProduct) {
+            $lineTotal = $cartProduct->final_price * $qty;
+            $cartSubtotal += $lineTotal;
+            $cartItems[] = [
+                'product' => $cartProduct,
+                'qty' => $qty,
+                'line_total' => $lineTotal,
+            ];
+        }
+    }
+
+    $freeShippingThreshold = (float) \App\Models\Setting::get('free_shipping_threshold', 150);
+    $shippingCost = (float) \App\Models\Setting::get('shipping_cost', 12);
+    $cartShipping = ($cartSubtotal >= $freeShippingThreshold || count($cartItems) === 0) ? 0 : $shippingCost;
+    $cartTotal = $cartSubtotal + $cartShipping;
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -27,7 +53,7 @@
         }
     </style>
 </head>
-<body class="font-body antialiased bg-white text-navy-900">
+<body class="font-body antialiased bg-white text-navy-900" x-data="{ cartOpen: {{ session('open_cart') ? 'true' : 'false' }} }" @keydown.escape.window="cartOpen = false">
 
     <!-- Announcement bar -->
     <div class="bg-navy-950 text-ivory text-xs sm:text-sm text-center py-2 px-4 tracking-wide">
@@ -68,14 +94,14 @@
                     </svg>
                 </a>
 
-                <a href="{{ url('/cart') }}" class="relative text-navy-700 hover:text-pulse-500 transition-colors" aria-label="Cart">
+                <button type="button" @click="cartOpen = true" class="relative text-navy-700 hover:text-pulse-500 transition-colors" aria-label="Cart">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 3h2l.4 2M7 13h10l3.6-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z" />
                     </svg>
                     <span class="absolute -top-2 -right-2 bg-pulse-500 text-white text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">
-                        {{ count(session('cart', [])) ?: 0 }}
+                        {{ array_sum(session('cart', [])) ?: 0 }}
                     </span>
-                </a>
+                </button>
             </div>
         </div>
     </header>
@@ -95,6 +121,96 @@
     <main>
         {{ $slot }}
     </main>
+
+    <div x-cloak x-show="cartOpen" class="fixed inset-0 z-50" aria-modal="true" role="dialog">
+        <div x-show="cartOpen" x-transition.opacity class="absolute inset-0 bg-navy-950/50" @click="cartOpen = false"></div>
+
+        <aside x-show="cartOpen"
+               x-transition:enter="transition ease-out duration-300"
+               x-transition:enter-start="translate-x-full"
+               x-transition:enter-end="translate-x-0"
+               x-transition:leave="transition ease-in duration-200"
+               x-transition:leave-start="translate-x-0"
+               x-transition:leave-end="translate-x-full"
+               class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+            <div class="h-16 px-5 border-b border-navy-100 flex items-center justify-between">
+                <div>
+                    <h2 class="font-display font-semibold text-navy-900">Your Cart</h2>
+                    <p class="text-xs text-navy-700/50">{{ array_sum($cart) }} items</p>
+                </div>
+                <button type="button" @click="cartOpen = false" class="w-9 h-9 rounded-full border border-navy-100 flex items-center justify-center text-navy-700 hover:text-pulse-500 hover:border-pulse-300" aria-label="Close cart">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-5">
+                @forelse ($cartItems as $item)
+                    <div class="py-5 border-b border-navy-100 flex gap-4">
+                        <div class="w-20 h-20 rounded-lg bg-ivory overflow-hidden shrink-0">
+                            <img src="{{ $item['product']->image_url }}" alt="{{ $item['product']->name }}" class="w-full h-full object-cover"
+                                 onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm font-semibold text-navy-900 leading-snug">{{ $item['product']->name }}</p>
+                            <p class="text-xs text-navy-700/50 mt-1">{{ $currency_symbol }}{{ number_format($item['product']->final_price, 2) }} each</p>
+                            <div class="mt-3 flex items-center justify-between gap-3">
+                                <form method="POST" action="{{ route('cart.update', $item['product']->id) }}" class="flex items-center border border-navy-100 rounded-full" x-data="{ qty: {{ $item['qty'] }} }">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="qty" :value="qty">
+                                    <button type="button" @click="qty = Math.max(1, qty - 1); $el.closest('form').submit()" class="w-8 h-8 flex items-center justify-center text-navy-700 hover:text-pulse-500">-</button>
+                                    <span class="w-7 text-center text-xs font-semibold">{{ $item['qty'] }}</span>
+                                    <button type="button" @click="qty = qty + 1; $el.closest('form').submit()" class="w-8 h-8 flex items-center justify-center text-navy-700 hover:text-pulse-500">+</button>
+                                </form>
+                                <form method="POST" action="{{ route('cart.destroy', $item['product']->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-xs font-semibold text-red-500 hover:text-red-600">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                        <p class="text-sm font-bold text-navy-900 shrink-0">{{ $currency_symbol }}{{ number_format($item['line_total'], 2) }}</p>
+                    </div>
+                @empty
+                    <div class="h-full min-h-80 flex flex-col items-center justify-center text-center">
+                        <p class="font-display text-xl font-semibold text-navy-900">Your cart is empty</p>
+                        <p class="text-sm text-navy-700/50 mt-2">Add a product and it will appear here.</p>
+                        <a href="{{ url('/shop') }}" @click="cartOpen = false" class="mt-6 px-5 py-2.5 rounded-full bg-navy-900 text-white text-sm font-semibold hover:bg-navy-800">Browse Products</a>
+                    </div>
+                @endforelse
+            </div>
+
+            <div class="border-t border-navy-100 p-5 space-y-4">
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between text-navy-700/70">
+                        <span>Subtotal</span>
+                        <span class="font-semibold text-navy-900">{{ $currency_symbol }}{{ number_format($cartSubtotal, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between text-navy-700/70">
+                        <span>Shipping</span>
+                        <span class="font-semibold {{ $cartShipping === 0 ? 'text-emerald-600' : 'text-navy-900' }}">{{ $cartShipping === 0 ? 'Free' : $currency_symbol.number_format($cartShipping, 2) }}</span>
+                    </div>
+                    @if ($cartShipping > 0)
+                        <p class="text-xs text-pulse-500 bg-pulse-100 rounded-lg px-3 py-2">
+                            Add {{ $currency_symbol }}{{ number_format($freeShippingThreshold - $cartSubtotal, 2) }} more for free shipping.
+                        </p>
+                    @endif
+                </div>
+                <div class="flex justify-between border-t border-navy-100 pt-4">
+                    <span class="font-semibold text-navy-900">Total</span>
+                    <span class="font-display font-bold text-lg text-navy-900">{{ $currency_symbol }}{{ number_format($cartTotal, 2) }}</span>
+                </div>
+                <a href="{{ url('/checkout') }}" class="block text-center rounded-full bg-pulse-500 hover:bg-pulse-400 text-white font-semibold text-sm py-3.5 transition-colors {{ count($cartItems) ? '' : 'pointer-events-none opacity-50' }}">
+                    Checkout
+                </a>
+                <button type="button" @click="cartOpen = false" class="w-full text-center text-sm font-semibold text-pulse-500 hover:text-pulse-400">
+                    Continue Shopping
+                </button>
+            </div>
+        </aside>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-navy-950 text-ivory mt-24">

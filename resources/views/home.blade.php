@@ -10,6 +10,7 @@
         ['label' => '2-Year Warranty', 'sub' => 'On every device'],
         ['label' => '24/7 Support', 'sub' => 'Real humans, fast replies'],
     ];
+    $fallbackImage = \App\Models\Product::fallbackImageUrl();
 @endphp
 
 <x-storefront-layout :title="'PulseTrade — Electronics Built For The Everyday Edge'">
@@ -99,7 +100,8 @@
                     <a href="{{ url('/shop/product/'.$product->slug) }}" class="snap-start shrink-0 w-64 rounded-2xl border border-navy-100 bg-white overflow-hidden hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
                         @if($product->image_url)
                             <div class="aspect-square bg-ivory overflow-hidden">
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
+                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                             </div>
                         @else
                             <div class="aspect-square bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center">
@@ -135,7 +137,8 @@
                     <span class="absolute top-4 right-4 text-xs font-bold text-navy-700/30">#{{ $i + 1 }}</span>
                     @if($product->image_url)
                         <div class="aspect-square rounded-xl overflow-hidden mb-4">
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy">
+                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
+                                 onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                         </div>
                     @else
                         <div class="aspect-square rounded-xl bg-navy-900/5 mb-4 flex items-center justify-center">
@@ -182,7 +185,8 @@
                     <a href="{{ url('/shop/product/'.$product->slug) }}" class="rounded-2xl bg-white border border-navy-100 p-5 hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
                         @if($product->image_url)
                             <div class="aspect-square rounded-xl overflow-hidden mb-4">
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy">
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
+                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                             </div>
                         @else
                             <div class="aspect-square rounded-xl bg-gradient-to-br from-navy-800 to-pulse-500 mb-4 flex items-center justify-center">

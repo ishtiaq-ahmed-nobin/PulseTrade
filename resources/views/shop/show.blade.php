@@ -1,5 +1,6 @@
 @php
     // $product, $gallery, $reviews, $related are passed from the route
+    $fallbackImage = \App\Models\Product::fallbackImageUrl();
 @endphp
 
 <x-storefront-layout :title="$product->name.' — PulseTrade'">
@@ -17,10 +18,12 @@
         <div x-data="{ active: 0 }">
             <div class="relative aspect-square rounded-3xl overflow-hidden">
                 @forelse ($gallery as $i => $url)
-                    <img x-show="active === {{ $i }}" x-cloak src="{{ $url }}" alt="{{ $product->name }}" class="absolute inset-0 w-full h-full object-cover">
+                    <img x-show="active === {{ $i }}" x-cloak src="{{ $url }}" alt="{{ $product->name }}" class="absolute inset-0 w-full h-full object-cover"
+                         onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                 @empty
                     @if($product->image_url)
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover"
+                             onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                     @else
                         <div class="absolute inset-0 bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center">
                             <svg class="w-24 h-24 text-navy-700/15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -34,7 +37,8 @@
                         <button @click="active = {{ $i }}"
                             class="aspect-square rounded-xl overflow-hidden ring-2 transition-all"
                             :class="active === {{ $i }} ? 'ring-pulse-500' : 'ring-transparent opacity-70 hover:opacity-100'">
-                            <img src="{{ $url }}" alt="Thumbnail {{ $i + 1 }}" class="w-full h-full object-cover">
+                            <img src="{{ $url }}" alt="Thumbnail {{ $i + 1 }}" class="w-full h-full object-cover"
+                                 onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                         </button>
                     @endforeach
                 </div>
@@ -135,7 +139,8 @@
                     <a href="{{ url('/shop/product/'.$item->slug) }}" class="group rounded-2xl border border-navy-100 bg-white overflow-hidden hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
                         @if($item->image_url)
                             <div class="aspect-square bg-ivory overflow-hidden">
-                                <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                                <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy"
+                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                             </div>
                         @else
                             <div class="aspect-square bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center">

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SalesReportController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use App\Models\Product;
@@ -52,17 +53,9 @@ Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
 Route::patch('/cart/{productId}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{productId}', [CartController::class, 'destroy'])->name('cart.destroy');
 
-Route::get('/checkout', function () {
-    return view('checkout.index');
-});
-
-Route::post('/checkout', function () {
-    return redirect('/checkout/confirmation');
-});
-
-Route::get('/checkout/confirmation', function () {
-    return view('checkout.confirmation');
-});
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
 
 Route::get('/about', function () {
     return view('about');

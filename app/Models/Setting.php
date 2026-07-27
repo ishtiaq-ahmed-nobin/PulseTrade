@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class Setting extends Model
 {
@@ -18,6 +20,14 @@ class Setting extends Model
 
     public static function get(string $key, mixed $default = null): mixed
     {
+        try {
+            if (! Schema::hasTable('settings')) {
+                return $default;
+            }
+        } catch (Throwable) {
+            return $default;
+        }
+
         $cached = Cache::get("setting_{$key}");
         if ($cached !== null) return $cached;
 

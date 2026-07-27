@@ -101,6 +101,13 @@
                     </div>
                 </div>
                 @error('image') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                <div class="mt-3">
+                    <label for="image_url" class="block text-sm font-medium text-navy-700 mb-1">Or Image URL</label>
+                    <input type="url" name="image_url" id="image_url" value="{{ old('image_url') }}"
+                           class="w-full rounded-lg border-navy-200 text-navy-900 focus:border-pulse-500 focus:ring-pulse-500"
+                           placeholder="https://images.unsplash.com/...">
+                    @error('image_url') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
 
             <div>
@@ -117,6 +124,15 @@
                 </div>
                 @error('images') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 @error('images.*') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                <div class="mt-3 space-y-2">
+                    <label class="block text-sm font-medium text-navy-700">Or Gallery Image URLs</label>
+                    @for ($i = 0; $i < 3; $i++)
+                        <input type="url" name="gallery_urls[]" value="{{ old('gallery_urls.'.$i) }}"
+                               class="w-full rounded-lg border-navy-200 text-navy-900 focus:border-pulse-500 focus:ring-pulse-500"
+                               placeholder="https://images.unsplash.com/...">
+                    @endfor
+                    @error('gallery_urls.*') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
 
             <div class="flex items-center gap-2">

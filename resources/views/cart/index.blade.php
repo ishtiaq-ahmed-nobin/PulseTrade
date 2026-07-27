@@ -1,3 +1,7 @@
+@php
+    $fallbackImage = \App\Models\Product::fallbackImageUrl();
+@endphp
+
 <x-storefront-layout :title="'Your Cart — PulseTrade'" :cartCount="count($items)">
 
     <div class="bg-navy-950 text-white py-14">
@@ -16,13 +20,8 @@
                     @foreach ($items as $item)
                         <div class="py-6 flex items-center gap-5">
                             <div class="w-24 h-24 rounded-xl bg-ivory overflow-hidden shrink-0">
-                                @if($item['product']->image_url)
-                                    <img src="{{ $item['product']->image_url }}" alt="{{ $item['product']->name }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-navy-100 to-navy-200">
-                                        <svg class="w-8 h-8 text-navy-700/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    </div>
-                                @endif
+                                <img src="{{ $item['product']->image_url }}" alt="{{ $item['product']->name }}" class="w-full h-full object-cover"
+                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="font-semibold text-navy-900 text-sm">{{ $item['product']->name }}</p>

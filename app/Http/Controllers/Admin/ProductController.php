@@ -53,8 +53,11 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'sale_price' => 'nullable|numeric|min:0|lt:price',
             'stock' => 'required|integer|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'image_url' => 'nullable|url|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'gallery_urls' => 'nullable|array',
+            'gallery_urls.*' => 'nullable|url|max:2048',
             'is_featured' => 'nullable|boolean',
         ]);
 
@@ -66,17 +69,30 @@ class ProductController extends Controller
 
         $validated['is_featured'] = $request->boolean('is_featured');
 
+        // Main image: file upload takes priority, then URL
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
+        } elseif (!empty($validated['image_url'])) {
+            $validated['image'] = $validated['image_url'];
         }
+        unset($validated['image_url']);
 
+        // Gallery: merge file uploads and URL entries
         $galleryPaths = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $galleryPaths[] = $image->store('products', 'public');
             }
         }
-        $validated['images'] = $galleryPaths;
+        if (!empty($validated['gallery_urls'])) {
+            foreach ($validated['gallery_urls'] as $url) {
+                if (!empty($url)) {
+                    $galleryPaths[] = $url;
+                }
+            }
+        }
+        unset($validated['gallery_urls']);
+        $validated['images'] = count($galleryPaths) > 0 ? $galleryPaths : null;
 
         Product::create($validated);
 
@@ -101,7 +117,10 @@ class ProductController extends Controller
             'sale_price' => 'nullable|numeric|min:0|lt:price',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'image_url' => 'nullable|url|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'gallery_urls' => 'nullable|array',
+            'gallery_urls.*' => 'nullable|url|max:2048',
             'is_featured' => 'nullable|boolean',
         ]);
 
@@ -112,16 +131,22 @@ class ProductController extends Controller
         $validated['is_featured'] = $request->boolean('is_featured');
 
         if ($request->hasFile('image')) {
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
+            if ($this->isStoredImage($product->image) && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
             }
             $validated['image'] = $request->file('image')->store('products', 'public');
+        } elseif ($request->filled('image_url')) {
+            if ($this->isStoredImage($product->image) && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $validated['image'] = $validated['image_url'];
         }
+        unset($validated['image_url']);
 
         if ($request->hasFile('images')) {
-            if ($product->images) {
-                foreach ($product->images as $oldImage) {
-                    if (Storage::disk('public')->exists($oldImage)) {
+            if (count($product->gallery_images) > 0) {
+                foreach ($product->gallery_images as $oldImage) {
+                    if ($this->isStoredImage($oldImage) && Storage::disk('public')->exists($oldImage)) {
                         Storage::disk('public')->delete($oldImage);
                     }
                 }
@@ -132,6 +157,16 @@ class ProductController extends Controller
             }
             $validated['images'] = $galleryPaths;
         }
+        if (!empty($validated['gallery_urls'])) {
+            $galleryPaths = $validated['images'] ?? $product->gallery_images;
+            foreach ($validated['gallery_urls'] as $url) {
+                if (!empty($url)) {
+                    $galleryPaths[] = $url;
+                }
+            }
+            $validated['images'] = count($galleryPaths) > 0 ? $galleryPaths : null;
+        }
+        unset($validated['gallery_urls']);
 
         $product->update($validated);
 
@@ -141,12 +176,12 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
+        if ($this->isStoredImage($product->image) && Storage::disk('public')->exists($product->image)) {
             Storage::disk('public')->delete($product->image);
         }
-        if ($product->images) {
-            foreach ($product->images as $image) {
-                if (Storage::disk('public')->exists($image)) {
+        if (count($product->gallery_images) > 0) {
+            foreach ($product->gallery_images as $image) {
+                if ($this->isStoredImage($image) && Storage::disk('public')->exists($image)) {
                     Storage::disk('public')->delete($image);
                 }
             }
@@ -157,5 +192,10 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    private function isStoredImage(?string $path): bool
+    {
+        return filled($path) && ! str_starts_with($path, 'http://') && ! str_starts_with($path, 'https://');
     }
 }

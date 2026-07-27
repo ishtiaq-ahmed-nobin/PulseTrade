@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,7 +22,10 @@ class AppServiceProvider extends ServiceProvider
             'MXN' => 'Mex$', 'SEK' => 'kr', 'NOK' => 'kr', 'DKK' => 'kr', 'CHF' => 'CHF',
             'PLN' => 'zł', 'CZK' => 'Kč', 'ZAR' => 'R', 'SGD' => 'S$', 'HKD' => 'HK$',
         ];
-        $code = Setting::get('store_currency', 'USD');
+        $code = Schema::hasTable('settings')
+            ? Setting::get('store_currency', 'USD')
+            : 'USD';
+
         $symbol = $symbols[strtoupper($code)] ?? strtoupper($code) . ' ';
         View::share('currency_symbol', $symbol);
     }
