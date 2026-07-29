@@ -136,29 +136,7 @@
             <h2 class="font-display text-2xl font-bold text-navy-900 mb-8">You may also like</h2>
             <div class="grid sm:grid-cols-3 gap-6">
                 @foreach ($related as $item)
-                    <a href="{{ url('/shop/product/'.$item->slug) }}" class="group rounded-2xl border border-navy-100 bg-white overflow-hidden hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
-                        @if($item->image_url)
-                            <div class="aspect-square bg-ivory overflow-hidden">
-                                <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy"
-                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
-                            </div>
-                        @else
-                            <div class="aspect-square bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center">
-                                <svg class="w-12 h-12 text-navy-700/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
-                        @endif
-                        <div class="p-4">
-                            <p class="text-sm font-semibold text-navy-900 group-hover:text-pulse-500 transition-colors">{{ $item->name }}</p>
-                            <div class="mt-2 flex items-center gap-2">
-                                @if ($item->hasDiscount())
-                                    <span class="text-sm font-bold text-pulse-500">{{ $currency_symbol }}{{ number_format($item->sale_price, 0) }}</span>
-                                    <span class="text-xs text-navy-700/40 line-through">{{ $currency_symbol }}{{ number_format($item->price, 0) }}</span>
-                                @else
-                                    <span class="text-sm font-bold text-navy-900">{{ $currency_symbol }}{{ number_format($item->price, 0) }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
+                    <x-product-card :product="$item" />
                 @endforeach
             </div>
         </div>

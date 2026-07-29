@@ -23,7 +23,7 @@ class AdminAuthController extends Controller
             return redirect()->route('user.dashboard');
         }
 
-        return view('auth.admin-login');
+        return view('admin.auth.login');
     }
 
     public function store(LoginRequest $request): RedirectResponse

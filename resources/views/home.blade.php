@@ -97,29 +97,7 @@
             </div>
             <div class="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 snap-x">
                 @foreach ($featured as $product)
-                    <a href="{{ url('/shop/product/'.$product->slug) }}" class="snap-start shrink-0 w-64 rounded-2xl border border-navy-100 bg-white overflow-hidden hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
-                        @if($product->image_url)
-                            <div class="aspect-square bg-ivory overflow-hidden">
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
-                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
-                            </div>
-                        @else
-                            <div class="aspect-square bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center">
-                                <svg class="w-12 h-12 text-navy-700/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
-                        @endif
-                        <div class="p-4">
-                            <p class="text-sm font-semibold text-navy-900 leading-snug">{{ $product->name }}</p>
-                            <div class="mt-2 flex items-center gap-2">
-                                @if ($product->hasDiscount())
-                                    <span class="text-sm font-bold text-pulse-500">{{ $currency_symbol }}{{ number_format($product->sale_price, 0) }}</span>
-                                    <span class="text-xs text-navy-700/40 line-through">{{ $currency_symbol }}{{ number_format($product->price, 0) }}</span>
-                                @else
-                                    <span class="text-sm font-bold text-navy-900">{{ $currency_symbol }}{{ number_format($product->price, 0) }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
+                    <x-product-card :product="$product" class="snap-start shrink-0 w-64" />
                 @endforeach
             </div>
         </div>
@@ -131,26 +109,20 @@
             <span class="text-xs font-semibold tracking-widest uppercase text-pulse-500">Most Loved</span>
             <h2 class="font-display text-3xl font-bold text-navy-900 mt-2">Best Sellers</h2>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            @foreach ($bestSellers as $i => $product)
-                <a href="{{ url('/shop/product/'.$product->slug) }}" class="relative rounded-2xl border border-navy-100 p-5 hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
-                    <span class="absolute top-4 right-4 text-xs font-bold text-navy-700/30">#{{ $i + 1 }}</span>
-                    @if($product->image_url)
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                @foreach ($bestSellers as $i => $product)
+                    <a href="{{ url('/shop/product/'.$product->slug) }}" class="relative rounded-2xl border border-navy-100 p-5 hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
+                        <span class="absolute top-4 right-4 text-xs font-bold text-navy-700/30">#{{ $i + 1 }}</span>
                         <div class="aspect-square rounded-xl overflow-hidden mb-4">
-                            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
+                            <img src="{{ $product->demo_image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
                                  onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
                         </div>
-                    @else
-                        <div class="aspect-square rounded-xl bg-navy-900/5 mb-4 flex items-center justify-center">
-                            <svg class="w-10 h-10 text-navy-700/15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        </div>
-                    @endif
-                    <p class="text-sm font-semibold text-navy-900">{{ $product->name }}</p>
-                    <p class="text-xs text-navy-700/50 mt-1">{{ $product->reviews_count }} reviews</p>
-                    <p class="text-sm font-bold text-navy-900 mt-2">{{ $currency_symbol }}{{ number_format($product->price, 0) }}</p>
-                </a>
-            @endforeach
-        </div>
+                        <p class="text-sm font-semibold text-navy-900">{{ $product->name }}</p>
+                        <p class="text-xs text-navy-700/50 mt-1">{{ $product->reviews_count }} reviews</p>
+                        <p class="text-sm font-bold text-navy-900 mt-2">{{ $currency_symbol }}{{ number_format($product->price, 0) }}</p>
+                    </a>
+                @endforeach
+            </div>
     </section>
 
     {{-- 6. MID-PAGE PROMO BANNER --}}
@@ -183,16 +155,10 @@
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 @foreach ($newArrivals as $product)
                     <a href="{{ url('/shop/product/'.$product->slug) }}" class="rounded-2xl bg-white border border-navy-100 p-5 hover:shadow-lg hover:shadow-navy-900/5 transition-shadow">
-                        @if($product->image_url)
-                            <div class="aspect-square rounded-xl overflow-hidden mb-4">
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
-                                     onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
-                            </div>
-                        @else
-                            <div class="aspect-square rounded-xl bg-gradient-to-br from-navy-800 to-pulse-500 mb-4 flex items-center justify-center">
-                                <svg class="w-10 h-10 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
-                        @endif
+                        <div class="aspect-square rounded-xl overflow-hidden mb-4">
+                            <img src="{{ $product->demo_image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover" loading="lazy"
+                                 onerror="this.onerror=null;this.src='{{ $fallbackImage }}';">
+                        </div>
                         <span class="text-[10px] font-bold tracking-wider uppercase text-pulse-500">New</span>
                         <p class="text-sm font-semibold text-navy-900 mt-1">{{ $product->name }}</p>
                         <p class="text-sm font-bold text-navy-900 mt-2">{{ $currency_symbol }}{{ number_format($product->price, 0) }}</p>
