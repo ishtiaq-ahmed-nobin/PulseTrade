@@ -102,14 +102,14 @@ Route::middleware('auth')->group(function () {
 // --- Admin Authentication ---
 Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'create'])->name('login');
-    Route::post('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'store'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'store']);
 });
 
 Route::get('/admin', function () {
     if (auth()->check() && auth()->user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
     }
-    return redirect()->route('admin.login');
+    return redirect('/admin/login');
 })->name('admin.index');
 
 // --- Admin Panel ---
