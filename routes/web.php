@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CouponController as StorefrontCouponController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -28,12 +30,7 @@ Route::get('/', function () {
     return view('home', compact('featured', 'bestSellers', 'newArrivals', 'categories'));
 });
 
-Route::get('/shop', function () {
-    $products = Product::with('category')->get();
-    $categories = Category::withCount('products')->get();
-
-    return view('shop.index', compact('products', 'categories'));
-});
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 
 Route::get('/shop/product/{product:slug}', function (Product $product) {
     $product->load('category', 'reviews');
@@ -56,6 +53,9 @@ Route::delete('/cart/{productId}', [CartController::class, 'destroy'])->name('ca
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
+
+Route::post('/coupon/apply', [StorefrontCouponController::class, 'apply'])->name('coupon.apply');
+Route::post('/coupon/remove', [StorefrontCouponController::class, 'remove'])->name('coupon.remove');
 
 Route::get('/about', function () {
     return view('about');
@@ -111,6 +111,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
     Route::get('reports/sales', [SalesReportController::class, 'index'])->name('reports.sales');
+    Route::get('reports/sales/csv', [SalesReportController::class, 'exportCsv'])->name('reports.sales.csv');
+    Route::get('reports/sales/pdf', [SalesReportController::class, 'exportPdf'])->name('reports.sales.pdf');
 
     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::patch('inventory/{product}/stock', [InventoryController::class, 'updateStock'])->name('inventory.updateStock');

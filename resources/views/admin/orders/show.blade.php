@@ -51,6 +51,21 @@
                             @endforeach
                         </tbody>
                         <tfoot>
+                            @php
+                                $subtotal = $order->items->sum(fn ($item) => $item->price * $item->quantity);
+                            @endphp
+                            <tr class="border-t border-navy-100">
+                                <td colspan="3" class="px-5 py-2 text-right text-sm text-navy-700/60">Subtotal</td>
+                                <td class="px-5 py-2 text-right text-sm text-navy-700">{{ $currency_symbol }}{{ number_format($subtotal, 2) }}</td>
+                            </tr>
+                            @if ($order->coupon_code && $order->discount_amount > 0)
+                                <tr>
+                                    <td colspan="3" class="px-5 py-2 text-right text-sm text-emerald-600">
+                                        Discount <span class="font-medium">({{ $order->coupon_code }})</span>
+                                    </td>
+                                    <td class="px-5 py-2 text-right text-sm font-medium text-emerald-600">-{{ $currency_symbol }}{{ number_format($order->discount_amount, 2) }}</td>
+                                </tr>
+                            @endif
                             <tr class="border-t border-navy-100">
                                 <td colspan="3" class="px-5 py-3 text-right font-medium text-navy-700">Total</td>
                                 <td class="px-5 py-3 text-right font-bold text-navy-900">{{ $currency_symbol }}{{ number_format($order->total_amount, 2) }}</td>
@@ -138,6 +153,20 @@
                     <p class="text-navy-700"><span class="text-navy-700/60">Date:</span> {{ $order->created_at->format('M d, Y g:i A') }}</p>
                 </div>
             </div>
+
+            <!-- Coupon Info -->
+            @if ($order->coupon_code && $order->discount_amount > 0)
+                <div class="bg-emerald-50 rounded-xl border border-emerald-200 p-5">
+                    <h3 class="font-display font-semibold text-emerald-800 mb-4 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                        Coupon Applied
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <p class="text-emerald-700"><span class="text-emerald-600/60">Code:</span> <span class="font-semibold">{{ $order->coupon_code }}</span></p>
+                        <p class="text-emerald-700"><span class="text-emerald-600/60">Discount:</span> <span class="font-semibold">-{{ $currency_symbol }}{{ number_format($order->discount_amount, 2) }}</span></p>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </x-layouts.admin>

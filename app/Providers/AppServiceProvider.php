@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use App\View\Components\AdminNavigation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -28,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
 
         $symbol = $symbols[strtoupper($code)] ?? strtoupper($code) . ' ';
         View::share('currency_symbol', $symbol);
+
+        View::composer('components.layouts.admin', function ($view) {
+            $view->with('navGroups', app(AdminNavigation::class)());
+        });
     }
 }

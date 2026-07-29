@@ -10,20 +10,56 @@
         <h1 class="font-display text-3xl font-bold text-navy-900 mt-3">Thank you — it's on the way.</h1>
         <p class="text-navy-700/60 mt-3">A confirmation email with tracking details will follow shortly.</p>
 
-        <div class="mt-10 rounded-2xl border border-navy-100 p-6 text-left">
-            <div class="flex justify-between text-sm">
-                <span class="text-navy-700/60">Order Number</span>
-                <span class="font-semibold text-navy-900">PT-{{ strtoupper(substr(md5(now()), 0, 8)) }}</span>
+        @if ($order)
+            <div class="mt-10 rounded-2xl border border-navy-100 p-6 text-left">
+                <div class="flex justify-between text-sm">
+                    <span class="text-navy-700/60">Order Number</span>
+                    <span class="font-semibold text-navy-900">{{ $order->order_number }}</span>
+                </div>
+                <div class="flex justify-between text-sm mt-3">
+                    <span class="text-navy-700/60">Status</span>
+                    <span class="font-semibold text-navy-900 capitalize">{{ $order->status }}</span>
+                </div>
+                <div class="flex justify-between text-sm mt-3">
+                    <span class="text-navy-700/60">Payment</span>
+                    <span class="font-semibold text-navy-900 capitalize">{{ str_replace('_', ' ', $order->payment_method) }} — {{ $order->payment_status }}</span>
+                </div>
+                <div class="flex justify-between text-sm mt-3">
+                    <span class="text-navy-700/60">Shipping To</span>
+                    <span class="font-semibold text-navy-900">{{ $order->shipping_address }}</span>
+                </div>
+                @if ($order->coupon_code && $order->discount_amount > 0)
+                    <div class="flex justify-between text-sm mt-3">
+                        <span class="text-navy-700/60">Coupon</span>
+                        <span class="font-semibold text-emerald-600">{{ $order->coupon_code }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm mt-3">
+                        <span class="text-navy-700/60">Discount</span>
+                        <span class="font-semibold text-emerald-600">-{{ $currency_symbol }}{{ number_format($order->discount_amount, 2) }}</span>
+                    </div>
+                @endif
+                <div class="flex justify-between text-sm mt-3">
+                    <span class="text-navy-700/60">Estimated Delivery</span>
+                    <span class="font-semibold text-navy-900">{{ now()->addDays(3)->format('M j, Y') }}</span>
+                </div>
+                <div class="flex justify-between text-sm mt-3">
+                    <span class="text-navy-700/60">Total Paid</span>
+                    <span class="font-semibold text-navy-900">{{ $currency_symbol }}{{ number_format($order->total_amount, 2) }}</span>
+                </div>
+
+                @if ($order->items->count())
+                    <div class="border-t border-navy-100 mt-4 pt-4">
+                        <p class="text-xs font-semibold text-navy-700/60 uppercase tracking-wide mb-3">Items</p>
+                        @foreach ($order->items as $item)
+                            <div class="flex justify-between text-sm mt-2">
+                                <span class="text-navy-700/70">{{ $item->product->name ?? 'Product' }} × {{ $item->quantity }}</span>
+                                <span class="font-semibold text-navy-900">{{ $currency_symbol }}{{ number_format($item->price * $item->quantity, 2) }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
-            <div class="flex justify-between text-sm mt-3">
-                <span class="text-navy-700/60">Estimated Delivery</span>
-                <span class="font-semibold text-navy-900">{{ now()->addDays(3)->format('M j, Y') }}</span>
-            </div>
-            <div class="flex justify-between text-sm mt-3">
-                <span class="text-navy-700/60">Total Paid</span>
-                <span class="font-semibold text-navy-900">{{ $currency_symbol }}675.00</span>
-            </div>
-        </div>
+        @endif
 
         <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <a href="{{ url('/shop') }}" class="px-7 py-3.5 rounded-full bg-navy-900 text-white font-semibold text-sm hover:bg-navy-800 transition-colors">

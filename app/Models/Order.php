@@ -18,21 +18,32 @@ class Order extends Model
         'shipping_phone',
         'payment_method',
         'payment_status',
+        'coupon_code',
+        'discount_amount',
     ];
 
-    /**
-     * Get the user that placed the order.
-     */
+    protected $casts = [
+        'total_amount' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the order items.
-     */
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_code', 'code');
+    }
+
+    public function getSubtotalAttribute(): float
+    {
+        return (float) $this->items->sum(fn ($item) => $item->price * $item->quantity);
     }
 }

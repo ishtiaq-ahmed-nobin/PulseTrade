@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
@@ -43,7 +44,10 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('open_cart', true);
         }
 
-        $order = DB::transaction(function () use ($validated, $checkout) {
+        $couponCode = Session::get('coupon_code');
+        $discountAmount = Session::get('discount_amount', 0);
+
+        $order = DB::transaction(function () use ($validated, $checkout, $couponCode, $discountAmount) {
             $user = auth()->user() ?: User::firstOrCreate(
                 ['email' => $validated['email']],
                 [
@@ -71,6 +75,8 @@ class CheckoutController extends Controller
                 'shipping_phone' => $validated['phone'],
                 'payment_method' => $validated['payment_method'] === 'card' ? 'stripe' : 'cod',
                 'payment_status' => $validated['payment_method'] === 'card' ? 'paid' : 'pending',
+                'coupon_code' => $couponCode,
+                'discount_amount' => $discountAmount,
             ]);
 
             foreach ($checkout['items'] as $item) {
@@ -83,10 +89,16 @@ class CheckoutController extends Controller
                 $item['product']->decrement('stock', min($item['qty'], $item['product']->stock));
             }
 
+            if ($couponCode) {
+                Coupon::where('code', $couponCode)->increment('used_count');
+            }
+
             return $order;
         });
 
         Session::forget('cart');
+        Session::forget('coupon_code');
+        Session::forget('discount_amount');
         Session::put('last_order_id', $order->id);
 
         return redirect()->route('checkout.confirmation');
@@ -127,11 +139,28 @@ class CheckoutController extends Controller
         $shippingCost = (float) Setting::get('shipping_cost', 12);
         $shipping = ($subtotal >= $freeShippingThreshold) ? 0 : $shippingCost;
 
+        $discount = 0;
+        $couponCode = Session::get('coupon_code');
+        if ($couponCode && count($items) > 0) {
+            $coupon = Coupon::where('code', $couponCode)->first();
+            if ($coupon && $coupon->isValid() && ($coupon->min_order <= 0 || $subtotal >= $coupon->min_order)) {
+                $discount = $coupon->discountAmount($subtotal);
+            } else {
+                Session::forget('coupon_code');
+                Session::forget('discount_amount');
+                $couponCode = null;
+            }
+        }
+
+        $total = max(0, $subtotal + (count($items) ? $shipping : 0) - $discount);
+
         return [
             'items' => $items,
             'subtotal' => $subtotal,
             'shipping' => count($items) ? $shipping : 0,
-            'total' => $subtotal + (count($items) ? $shipping : 0),
+            'discount' => $discount,
+            'couponCode' => $couponCode,
+            'total' => $total,
             'freeShippingThreshold' => $freeShippingThreshold,
         ];
     }
