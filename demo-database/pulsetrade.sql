@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2026 at 06:08 AM
+-- Generation Time: Jul 29, 2026 at 06:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -110,13 +110,13 @@ CREATE TABLE `coupons` (
 --
 
 INSERT INTO `coupons` (`id`, `code`, `type`, `value`, `min_order`, `usage_limit`, `used_count`, `is_active`, `expires_at`, `created_at`, `updated_at`) VALUES
-(1, 'WELCOME10', 'percentage', 10.00, 50.00, 100, 34, 1, '2027-01-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(2, 'SAVE50', 'fixed', 50.00, 200.00, 50, 12, 1, '2026-10-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(3, 'SUMMER20', 'percentage', 20.00, 100.00, 200, 87, 1, '2026-09-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(4, 'FLASH15', 'percentage', 15.00, 75.00, 30, 30, 0, '2026-07-14 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
+(1, 'WELCOME10', 'percentage', 10.00, 50.00, 100, 34, 1, '2027-01-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(2, 'SAVE50', 'fixed', 50.00, 200.00, 50, 12, 1, '2026-10-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(3, 'SUMMER20', 'percentage', 20.00, 100.00, 200, 87, 1, '2026-09-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(4, 'FLASH15', 'percentage', 15.00, 75.00, 30, 30, 0, '2026-07-23 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
 (5, 'FREESHIP', 'fixed', 9.99, 25.00, NULL, 156, 1, NULL, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(6, 'VIP30', 'percentage', 30.00, 500.00, 10, 4, 1, '2027-07-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(7, 'NEWYEAR', 'percentage', 25.00, 150.00, 100, 0, 0, '2026-01-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
+(6, 'VIP30', 'percentage', 30.00, 500.00, 10, 4, 1, '2027-07-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(7, 'NEWYEAR', 'percentage', 25.00, 150.00, 100, 0, 0, '2026-01-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
 (8, 'I50', 'percentage', 50.00, 1000.00, 200, 0, 1, '2026-07-30 09:39:00', '2026-07-28 03:39:33', '2026-07-28 03:39:33'),
 (9, '10', 'fixed', 10.00, 10.00, NULL, 0, 1, '2026-07-31 10:11:00', '2026-07-28 04:11:35', '2026-07-28 04:11:35');
 
@@ -362,23 +362,23 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `price`, `sale_price`, `stock`, `image`, `images`, `is_featured`, `created_at`, `updated_at`) VALUES
-(1, 1, 'PulseBook Pro 16', 'pulsebook-pro-16', 'The ultimate notebook for professionals. M3-equivalent octa-core processor, 32GB unified memory, and 1TB SSD. 16-inch Liquid Retina XDR display with 1600 nits brightness. Six-speaker sound system and 22-hour battery.', 2499.00, 2299.00, 14, 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 09:38:09', '2026-07-28 03:29:38'),
-(2, 1, 'PulseBook Air 13', 'pulsebook-air-13', 'Superlight. Supercharged. 13.6-inch Liquid Retina display, fanless design, 18-hour battery. Perfect for students and developers.', 1099.00, NULL, 29, 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 09:38:09', '2026-07-28 04:09:39'),
-(3, 2, 'PulsePhone 15 Ultra', 'pulsephone-15-ultra', 'Aerospace-grade titanium. A17 Pro-equivalent chip, customizable Action button, powerful zoom camera system. Super Retina XDR with ProMotion 120Hz.', 1199.00, 1099.00, 25, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 09:38:09', '2026-07-19 23:01:37'),
-(4, 2, 'PulseTab Pro 11', 'pulsetab-pro-11', 'Next-gen performance, ultra-thin. Tandem OLED display, ultra-wide Center Stage camera, 5G. Supports precision digital stylus.', 899.00, NULL, 20, 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 09:38:09', '2026-07-19 23:01:37'),
-(5, 3, 'PulseBuds Pro 2', 'pulsebuds-pro-2', 'Richer audio, 2x Active Noise Cancellation. Adaptive Audio, Spatial Audio for deeply personal immersion.', 249.00, 219.00, 100, 'https://images.unsplash.com/photo-1572569979132-b4f10c9ec185?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1572569979132-b4f10c9ec185?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 09:38:09', '2026-07-19 23:01:37'),
-(6, 3, 'PulseMax Studio Wireless', 'pulsemax-studio-wireless', 'Over-ear headphones reimagined. Uncompromising fit, optimal acoustic seal, high-fidelity custom drivers.', 549.00, 499.00, 12, 'https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1495107334309-fcf20504a5ab?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 09:38:09', '2026-07-19 23:01:37'),
-(7, 4, 'PulseWatch Active 4', 'pulsewatch-active-4', 'Health companion. Blood oxygen, ECG, precision GPS, always-on OLED, aluminum casing, contactless payment.', 399.00, NULL, 45, 'https://images.unsplash.com/photo-1723622555972-37af178c623a?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1723622555972-37af178c623a?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 09:38:09', '2026-07-19 23:01:37'),
-(8, 1, 'PulseBook Studio 14', 'pulsebook-studio-14', 'Built for creators. 14-inch mini-LED display with P3 wide color, M3 Pro chip, 18GB memory. Up to 17 hours battery. MagSafe charging, six-speaker system with spatial audio.', 1999.00, 1799.00, 18, 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(9, 1, 'PulseDesk Mini', 'pulsedesk-mini', 'M3 chip desktop powerhouse in a compact design. 16GB unified memory, 512GB SSD, Wi-Fi 6E. Connect up to two displays. Perfect for home office setups.', 799.00, NULL, 39, 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 23:01:37', '2026-07-28 04:09:39'),
-(10, 2, 'PulsePhone 15', 'pulsephone-15', 'The standard redefined. A17 chip, 48MP main camera, Ceramic Shield front. 6.1-inch Super Retina XDR display. All-day battery life and 5G.', 899.00, 799.00, 35, 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(11, 2, 'PulsePad Air', 'pulsepad-air', 'Lightweight powerhouse. 10.9-inch Liquid Retina display, M2 chip, Touch ID. Wi-Fi 6 and 5G optional. Works with Apple Pencil and Magic Keyboard.', 649.00, NULL, 28, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(12, 3, 'PulseBuds 3', 'pulsebuds-3', 'Everyday earbuds elevated. Active Noise Cancellation, Transparency mode, personalized spatial audio. 6-hour listening time, 30 hours with case.', 179.00, 159.00, 80, 'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(13, 3, 'PulseSound Bar', 'pulsesound-bar', 'Cinematic sound for your living room. Dolby Atmos, room-filling sound with seven drivers. Works with all your devices via HDMI eARC, Wi-Fi, Bluetooth.', 699.00, 599.00, 15, 'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(14, 4, 'PulseWatch Ultra 2', 'pulsewatch-ultra-2', 'The most rugged and capable smartwatch. 49mm titanium case, 2000-nit display, precision dual-frequency GPS. Depth gauge, water temperature, 36-hour battery.', 799.00, NULL, 20, 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1434493789847-2f02dc6ca35d?auto=format&fit=crop&w=1200&q=80\\\"]\"', 1, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(15, 4, 'PulseBand SE', 'pulseband-se', 'Fitness meets affordability. Heart rate monitoring, sleep tracking, 18 types of workouts. Water resistant to 50m. 15-day battery life.', 149.00, 129.00, 60, 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(16, 5, 'PulseChargPro 140W', 'pulsechargpro-140w', 'Charge everything at once. 140W GaN charger with 4 ports (2 USB-C, 2 USB-A). Compact design, foldable prongs. Charges MacBook Pro, iPhone, and iPad simultaneously.', 89.00, 69.00, 119, 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 23:01:37', '2026-07-28 04:12:20'),
-(17, 5, 'PulseHub Ultra', 'pulsehub-ultra', '11-in-1 USB-C hub. Dual HDMI 4K@60Hz, Ethernet, SD card, USB-A 3.0 ports, 100W passthrough charging. Aluminum body with built-in cable.', 129.00, NULL, 65, 'https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=1200&q=80', '\"[\\\"https:\\\\\\/\\\\\\/images.unsplash.com\\\\\\/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=1200&q=80\\\"]\"', 0, '2026-07-19 23:01:37', '2026-07-19 23:01:37');
+(1, 1, 'PulseBook Pro 16', 'pulsebook-pro-16', 'The ultimate notebook for professionals. M3-equivalent octa-core processor, 32GB unified memory, and 1TB SSD. 16-inch Liquid Retina XDR display with 1600 nits brightness. Six-speaker sound system and 22-hour battery.', 2499.00, 2299.00, 15, 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(2, 1, 'PulseBook Air 13', 'pulsebook-air-13', 'Superlight. Supercharged. 13.6-inch Liquid Retina display, fanless design, 18-hour battery. Perfect for students and developers.', 1099.00, NULL, 30, 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(3, 2, 'PulsePhone 15 Ultra', 'pulsephone-15-ultra', 'Aerospace-grade titanium. A17 Pro-equivalent chip, customizable Action button, powerful zoom camera system. Super Retina XDR with ProMotion 120Hz.', 1199.00, 1099.00, 25, 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(4, 2, 'PulseTab Pro 11', 'pulsetab-pro-11', 'Next-gen performance, ultra-thin. Tandem OLED display, ultra-wide Center Stage camera, 5G. Supports precision digital stylus.', 899.00, NULL, 20, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1527698266440-12104e498b76?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(5, 3, 'PulseBuds Pro 2', 'pulsebuds-pro-2', 'Richer audio, 2x Active Noise Cancellation. Adaptive Audio, Spatial Audio for deeply personal immersion.', 249.00, 219.00, 100, 'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(6, 3, 'PulseMax Studio Wireless', 'pulsemax-studio-wireless', 'Over-ear headphones reimagined. Uncompromising fit, optimal acoustic seal, high-fidelity custom drivers.', 549.00, 499.00, 12, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(7, 4, 'PulseWatch Active 4', 'pulsewatch-active-4', 'Health companion. Blood oxygen, ECG, precision GPS, always-on OLED, aluminum casing, contactless payment.', 399.00, NULL, 45, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1546868871-a0d9a1c5a0e9?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
+(8, 1, 'PulseBook Studio 14', 'pulsebook-studio-14', 'Built for creators. 14-inch mini-LED display with P3 wide color, M3 Pro chip, 18GB memory. Up to 17 hours battery. MagSafe charging, six-speaker system with spatial audio.', 1999.00, 1799.00, 18, 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(9, 1, 'PulseDesk Mini', 'pulsedesk-mini', 'M3 chip desktop powerhouse in a compact design. 16GB unified memory, 512GB SSD, Wi-Fi 6E. Connect up to two displays. Perfect for home office setups.', 799.00, NULL, 40, 'https://images.unsplash.com/photo-1593642702743-b2a86983193b?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1593642702743-b2a86983193b?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1593642702743-b2a86983193b?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(10, 2, 'PulsePhone 15', 'pulsephone-15', 'The standard redefined. A17 chip, 48MP main camera, Ceramic Shield front. 6.1-inch Super Retina XDR display. All-day battery life and 5G.', 899.00, 799.00, 35, 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(11, 2, 'PulsePad Air', 'pulsepad-air', 'Lightweight powerhouse. 10.9-inch Liquid Retina display, M2 chip, Touch ID. Wi-Fi 6 and 5G optional. Works with Apple Pencil and Magic Keyboard.', 649.00, NULL, 28, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1527698266440-12104e498b76?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(12, 3, 'PulseBuds 3', 'pulsebuds-3', 'Everyday earbuds elevated. Active Noise Cancellation, Transparency mode, personalized spatial audio. 6-hour listening time, 30 hours with case.', 179.00, 159.00, 80, 'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(13, 3, 'PulseSound Bar', 'pulsesound-bar', 'Cinematic sound for your living room. Dolby Atmos, room-filling sound with seven drivers. Works with all your devices via HDMI eARC, Wi-Fi, Bluetooth.', 699.00, 599.00, 15, 'https://images.unsplash.com/photo-1558089687-f282ffcbc126?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1558089687-f282ffcbc126?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(14, 4, 'PulseWatch Ultra 2', 'pulsewatch-ultra-2', 'The most rugged and capable smartwatch. 49mm titanium case, 2000-nit display, precision dual-frequency GPS. Depth gauge, water temperature, 36-hour battery.', 799.00, NULL, 20, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1546868871-a0d9a1c5a0e9?auto=format&fit=crop&w=600&q=80\"]', 1, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(15, 4, 'PulseBand SE', 'pulseband-se', 'Fitness meets affordability. Heart rate monitoring, sleep tracking, 18 types of workouts. Water resistant to 50m. 15-day battery life.', 149.00, 129.00, 60, 'https://images.unsplash.com/photo-1576243345690-4e4b79b63288?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1576243345690-4e4b79b63288?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(16, 5, 'PulseChargPro 140W', 'pulsechargpro-140w', 'Charge everything at once. 140W GaN charger with 4 ports (2 USB-C, 2 USB-A). Compact design, foldable prongs. Charges MacBook Pro, iPhone, and iPad simultaneously.', 89.00, 69.00, 120, 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(17, 5, 'PulseHub Ultra', 'pulsehub-ultra', '11-in-1 USB-C hub. Dual HDMI 4K@60Hz, Ethernet, SD card, USB-A 3.0 ports, 100W passthrough charging. Aluminum body with built-in cable.', 129.00, NULL, 65, 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80', '[\"https:\\/\\/images.unsplash.com\\/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80\",\"https:\\/\\/images.unsplash.com\\/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600&q=80\"]', 0, '2026-07-19 23:01:37', '2026-07-28 22:18:07');
 
 -- --------------------------------------------------------
 
@@ -401,26 +401,34 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `rating`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
+(1, 2, 1, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
 (2, 2, 1, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
-(3, 2, 3, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
+(3, 2, 3, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
 (4, 2, 3, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
-(5, 2, 5, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
+(5, 2, 5, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
 (6, 2, 5, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
-(7, 2, 6, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
+(7, 2, 6, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-28 22:18:07'),
 (8, 2, 6, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 09:38:09', '2026-07-19 09:38:09'),
 (9, 3, 1, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
 (10, 3, 3, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
 (11, 3, 5, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
 (12, 3, 6, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(13, 2, 8, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
+(13, 2, 8, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
 (14, 3, 8, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(15, 2, 10, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
+(15, 2, 10, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
 (16, 3, 10, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(17, 2, 13, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
+(17, 2, 13, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
 (18, 3, 13, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(19, 2, 14, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(20, 3, 14, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37');
+(19, 2, 14, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(20, 3, 14, 4, 'Very good value, although shipping took a bit longer than expected.', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
+(21, 1, 1, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(22, 1, 3, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(23, 1, 5, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(24, 1, 6, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(25, 1, 8, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(26, 1, 10, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(27, 1, 13, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07'),
+(28, 1, 14, 5, 'Absolutely amazing product! Build quality is top-notch and it exceeds expectations.', '2026-07-28 22:18:07', '2026-07-28 22:18:07');
 
 -- --------------------------------------------------------
 
@@ -465,10 +473,10 @@ CREATE TABLE `settings` (
 
 INSERT INTO `settings` (`id`, `key`, `value`, `group`, `created_at`, `updated_at`) VALUES
 (1, 'store_name', 'PulseTrade', 'store', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(2, 'store_email', NULL, 'store', '2026-07-19 23:01:37', '2026-07-19 23:13:24'),
-(3, 'store_phone', NULL, 'store', '2026-07-19 23:01:37', '2026-07-19 23:13:24'),
-(4, 'store_address', NULL, 'store', '2026-07-19 23:01:37', '2026-07-19 23:13:24'),
-(5, 'store_currency', '৳', 'store', '2026-07-19 23:01:37', '2026-07-19 23:52:27'),
+(2, 'store_email', 'hello@pulsetrade.com', 'store', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(3, 'store_phone', '+18005559876', 'store', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(4, 'store_address', '100 Tech Park Blvd, San Francisco, CA 94105', 'store', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(5, 'store_currency', 'USD', 'store', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
 (6, 'meta_title', 'PulseTrade - Premium Tech Electronics', 'seo', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
 (7, 'meta_description', 'Shop the latest in premium tech electronics. Laptops, phones, audio gear, wearables, and accessories from PulseTrade.', 'seo', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
 (8, 'free_shipping_threshold', '100', 'shipping', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
@@ -495,16 +503,16 @@ CREATE TABLE `subscribers` (
 --
 
 INSERT INTO `subscribers` (`id`, `email`, `name`, `is_active`, `subscribed_at`, `created_at`, `updated_at`) VALUES
-(1, 'sarah@example.com', 'Sarah Mitchell', 1, '2026-03-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(2, 'james@example.com', 'James Wilson', 1, '2026-04-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(3, 'emma@example.com', 'Emma Garcia', 1, '2026-05-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(4, 'michael@example.com', 'Michael Chen', 1, '2026-06-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(5, 'olivia@example.com', 'Olivia Brown', 1, '2026-06-28 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(6, 'david@example.com', 'David Kim', 0, '2026-02-19 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(7, 'sophia@example.com', 'Sophia Martinez', 1, '2026-07-09 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(8, 'alex@example.com', 'Alex Turner', 1, '2026-07-14 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(9, 'newsletter_fan@example.com', 'Chris Lee', 1, '2026-07-17 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(10, 'tech_lover@example.com', 'Jordan Patel', 1, '2026-07-18 23:01:37', '2026-07-19 23:01:37', '2026-07-19 23:01:37');
+(1, 'sarah@example.com', 'Sarah Mitchell', 1, '2026-03-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(2, 'james@example.com', 'James Wilson', 1, '2026-04-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(3, 'emma@example.com', 'Emma Garcia', 1, '2026-05-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(4, 'michael@example.com', 'Michael Chen', 1, '2026-06-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(5, 'olivia@example.com', 'Olivia Brown', 1, '2026-07-07 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(6, 'david@example.com', 'David Kim', 0, '2026-02-28 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(7, 'sophia@example.com', 'Sophia Martinez', 1, '2026-07-18 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(8, 'alex@example.com', 'Alex Turner', 1, '2026-07-23 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(9, 'newsletter_fan@example.com', 'Chris Lee', 1, '2026-07-26 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07'),
+(10, 'tech_lover@example.com', 'Jordan Patel', 1, '2026-07-27 22:18:07', '2026-07-19 23:01:37', '2026-07-28 22:18:07');
 
 -- --------------------------------------------------------
 
@@ -531,16 +539,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `phone`, `address`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'PulseTrade Admin', 'admin@pulsetrade.com', NULL, '$2y$12$rs.QrkuGXZndQfHCGXWw2ueJDCCI3wFBA50Cb/00XxztIWSfHyaoO', 'admin', '123456789', 'PulseTrade HQ, Tech City', '5yusaeUqMJGstLBl3YfNMwcN3I2kxMAWQcbks9IYGHEtxs2hYIujgYTGNGSs', '2026-07-19 09:38:09', '2026-07-28 03:29:38'),
-(2, 'John Doe', 'customer@pulsetrade.com', NULL, '$2y$12$FWft2.GQ08NApqiI2WHEpOS57/Vw6f.o3cKBHw85MWnb19IqBc18G', 'customer', '+1987654321', '123 Main Street, Apt 4B, Metropolis', NULL, '2026-07-19 09:38:09', '2026-07-19 23:01:35'),
-(3, 'Sarah Mitchell', 'sarah@example.com', NULL, '$2y$12$2eQ2YB8td6zjTJWTgvCF5u6GlMt4JHxQDi9ObnCrIqZhEuJMSapxS', 'customer', '+15551002001', '45 Oak Avenue, Springfield', NULL, '2026-07-19 23:01:35', '2026-07-19 23:01:35'),
-(4, 'James Wilson', 'james@example.com', NULL, '$2y$12$8v.soiS0gKN2.S85FCBq2eZM3AF8cbK41oU5hQS5GYSDkwtKGHcim', 'customer', '+15551002002', '78 Pine Road, Portland', NULL, '2026-07-19 23:01:35', '2026-07-19 23:01:35'),
-(5, 'Emma Garcia', 'emma@example.com', NULL, '$2y$12$2QHkXwe.q69WrI6BWOFwQu5JJs/V.ICQ4aSHmISjqfgiJlDpTu.e6', 'customer', '+15551002003', '12 Elm Street, Austin', NULL, '2026-07-19 23:01:36', '2026-07-19 23:01:36'),
-(6, 'Michael Chen', 'michael@example.com', NULL, '$2y$12$v8D0WFE2XXBODD6oybOQ9ujZCXXw4/Ad2b62ccuXrLsahVGm14I3S', 'customer', '+15551002004', '321 Maple Drive, Seattle', NULL, '2026-07-19 23:01:36', '2026-07-19 23:01:36'),
-(7, 'Olivia Brown', 'olivia@example.com', NULL, '$2y$12$pOGlFc.SXdZ961Nb3HOZDON7jzdwf77a0ZSS.mUBZFbkZVrdtDL9u', 'customer', '+15551002005', '56 Cedar Lane, Denver', NULL, '2026-07-19 23:01:36', '2026-07-19 23:01:36'),
-(8, 'David Kim', 'david@example.com', NULL, '$2y$12$WrAL2r8idtyfOJk5ymDmS.vPhzOgDmfgTdvAZuEnuN056kFpIujxm', 'customer', '+15551002006', '89 Birch Way, Boston', NULL, '2026-07-19 23:01:36', '2026-07-19 23:01:36'),
-(9, 'Sophia Martinez', 'sophia@example.com', NULL, '$2y$12$T73UNxsxOcWOKJkDOXzzvuG/RZJLyd.u.3VUZT1yYNOa3l30u7k/i', 'customer', '+15551002007', '14 Walnut Ct, Miami', NULL, '2026-07-19 23:01:37', '2026-07-19 23:01:37'),
-(10, 'Alex Turner', 'alex@example.com', NULL, '$2y$12$RZyo8mG/V2BKEo4RwpXR5.Rpok67ff8x.GzIcOH/3hSr/Id6wN4re', 'customer', '+15551002008', '27 Spruce Blvd, Chicago', NULL, '2026-07-19 23:01:37', '2026-07-19 23:01:37');
+(1, 'PulseTrade Admin', 'admin@pulsetrade.com', NULL, '$2y$12$J1LTl7ItEjsUQjAbEWtg5uQrzV6KEP5arqFilXwsPd6Lf5ZddBzqe', 'admin', '+1234567890', 'PulseTrade HQ, Tech City', '5yusaeUqMJGstLBl3YfNMwcN3I2kxMAWQcbks9IYGHEtxs2hYIujgYTGNGSs', '2026-07-19 09:38:09', '2026-07-28 22:18:04'),
+(2, 'John Doe', 'customer@pulsetrade.com', NULL, '$2y$12$gE30KGgn5aFH0t8uSOykcuK53Pl9wk1WotxsBC12Bh4J9zUJh77xG', 'customer', '+1987654321', '123 Main Street, Apt 4B, Metropolis', NULL, '2026-07-19 09:38:09', '2026-07-28 22:18:04'),
+(3, 'Sarah Mitchell', 'sarah@example.com', NULL, '$2y$12$fEVI2cFk35KvTAWuqnrYf.kdZTcdO/1085pVfDwSVqxeugjSyHv7e', 'customer', '+15551002001', '45 Oak Avenue, Springfield', NULL, '2026-07-19 23:01:35', '2026-07-28 22:18:05'),
+(4, 'James Wilson', 'james@example.com', NULL, '$2y$12$d/xdCvAtrwOr2v0S/g2H7.1w4AGFiHK1lyC5YE/H5rDda1xJ3TxnW', 'customer', '+15551002002', '78 Pine Road, Portland', NULL, '2026-07-19 23:01:35', '2026-07-28 22:18:05'),
+(5, 'Emma Garcia', 'emma@example.com', NULL, '$2y$12$2MOuPfKzuJYFt678vAtz1uuFXRgExEbx1Lje.md9QcEMHDW5E9ak6', 'customer', '+15551002003', '12 Elm Street, Austin', NULL, '2026-07-19 23:01:36', '2026-07-28 22:18:05'),
+(6, 'Michael Chen', 'michael@example.com', NULL, '$2y$12$tjkzXl/p4ItVls3dxsp8QOuC.l8rs7HlwOtiUh4.TSHPIlsAyiQKK', 'customer', '+15551002004', '321 Maple Drive, Seattle', NULL, '2026-07-19 23:01:36', '2026-07-28 22:18:05'),
+(7, 'Olivia Brown', 'olivia@example.com', NULL, '$2y$12$SeeOX2OuXl8kA64BN15N/.Ayv3DZ.w7EDJS.JcgPsINRsmLtff3Tu', 'customer', '+15551002005', '56 Cedar Lane, Denver', NULL, '2026-07-19 23:01:36', '2026-07-28 22:18:06'),
+(8, 'David Kim', 'david@example.com', NULL, '$2y$12$z9BFIkmwOHUQAZ7s0WVgQOKvcQeFISquG0A0j3NLLxLtbly9w5duu', 'customer', '+15551002006', '89 Birch Way, Boston', NULL, '2026-07-19 23:01:36', '2026-07-28 22:18:06'),
+(9, 'Sophia Martinez', 'sophia@example.com', NULL, '$2y$12$8d7zAlcQZt6aw5EAMmM9M.VbFN6UVirXSLUl1AeR5VoUaYjOzd746', 'customer', '+15551002007', '14 Walnut Ct, Miami', NULL, '2026-07-19 23:01:37', '2026-07-28 22:18:06'),
+(10, 'Alex Turner', 'alex@example.com', NULL, '$2y$12$Ut.Ne600n5eFrDoNy3ctmOn17EsQQwAhMBpzXH4VY7.Ltpht2e17e', 'customer', '+15551002008', '27 Spruce Blvd, Chicago', NULL, '2026-07-19 23:01:37', '2026-07-28 22:18:06'),
+(11, 'Demo User', 'user@pulsetrade.com', NULL, '$2y$12$zTgC.36UVvz/IvmR/ixev.KSuCjc5dcGRoYuAQR3rlJWS/EK4YFGq', 'customer', '+15551234567', '456 Demo Lane, User City', NULL, '2026-07-28 22:18:04', '2026-07-28 22:18:04');
 
 --
 -- Indexes for dumped tables
@@ -722,7 +731,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -740,7 +749,7 @@ ALTER TABLE `subscribers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
