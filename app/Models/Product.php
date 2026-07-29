@@ -61,7 +61,7 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
-    public const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80';
+    public const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=600&q=80';
 
     /**
      * Resolve an image path/URL to a full URL.

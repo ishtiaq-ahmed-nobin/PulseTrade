@@ -31,7 +31,19 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Seed Customer Users
+        // 2. Seed Demo User (for /login demo credentials)
+        User::updateOrCreate(
+            ['email' => 'user@pulsetrade.com'],
+            [
+                'name' => 'Demo User',
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+                'phone' => '+15551234567',
+                'address' => '456 Demo Lane, User City',
+            ]
+        );
+
+        // 3. Seed Customer Users
         $customer = User::updateOrCreate(
             ['email' => 'customer@pulsetrade.com'],
             [
@@ -80,7 +92,7 @@ class DatabaseSeeder extends Seeder
 
         $allCustomers = collect([$customer])->merge($customers);
 
-        // 3. Seed Categories
+        // 4. Seed Categories
         $categories = [
             ['name' => 'Laptops & Computers', 'description' => 'High performance workhorses and sleek notebooks for creators and professionals.'],
             ['name' => 'Smartphones & Tablets', 'description' => 'Latest mobile devices and tablets with cutting edge features.'],
@@ -97,104 +109,136 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // 4. Seed Products (7 original + 10 new = 17 total)
+        // 5. Seed Products (7 original + 10 new = 17 total)
+        $unsplash = [
+            'laptop' => 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80',
+            'laptop2' => 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80',
+            'laptop3' => 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80',
+            'phone' => 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80',
+            'phone2' => 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80',
+            'tablet' => 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80',
+            'tablet2' => 'https://images.unsplash.com/photo-1527698266440-12104e498b76?auto=format&fit=crop&w=600&q=80',
+            'earbuds' => 'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=600&q=80',
+            'earbuds2' => 'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80',
+            'headphones' => 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80',
+            'speaker' => 'https://images.unsplash.com/photo-1558089687-f282ffcbc126?auto=format&fit=crop&w=600&q=80',
+            'watch' => 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
+            'watch2' => 'https://images.unsplash.com/photo-1546868871-a0d9a1c5a0e9?auto=format&fit=crop&w=600&q=80',
+            'band' => 'https://images.unsplash.com/photo-1576243345690-4e4b79b63288?auto=format&fit=crop&w=600&q=80',
+            'desktop' => 'https://images.unsplash.com/photo-1593642702743-b2a86983193b?auto=format&fit=crop&w=600&q=80',
+            'charger' => 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=600&q=80',
+            'hub' => 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=600&q=80',
+        ];
+
         $products = [
             // --- Original 7 ---
             [
                 'category_index' => 0, 'name' => 'PulseBook Pro 16',
                 'description' => 'The ultimate notebook for professionals. M3-equivalent octa-core processor, 32GB unified memory, and 1TB SSD. 16-inch Liquid Retina XDR display with 1600 nits brightness. Six-speaker sound system and 22-hour battery.',
                 'price' => 2499.00, 'sale_price' => 2299.00, 'stock' => 15, 'is_featured' => true,
+                'image' => $unsplash['laptop'], 'images' => [$unsplash['laptop'], $unsplash['laptop2'], $unsplash['laptop3']],
             ],
             [
                 'category_index' => 0, 'name' => 'PulseBook Air 13',
                 'description' => 'Superlight. Supercharged. 13.6-inch Liquid Retina display, fanless design, 18-hour battery. Perfect for students and developers.',
                 'price' => 1099.00, 'sale_price' => null, 'stock' => 30, 'is_featured' => false,
+                'image' => $unsplash['laptop2'], 'images' => [$unsplash['laptop2'], $unsplash['laptop'], $unsplash['laptop3']],
             ],
             [
                 'category_index' => 1, 'name' => 'PulsePhone 15 Ultra',
                 'description' => 'Aerospace-grade titanium. A17 Pro-equivalent chip, customizable Action button, powerful zoom camera system. Super Retina XDR with ProMotion 120Hz.',
                 'price' => 1199.00, 'sale_price' => 1099.00, 'stock' => 25, 'is_featured' => true,
+                'image' => $unsplash['phone'], 'images' => [$unsplash['phone'], $unsplash['phone2'], $unsplash['phone']],
             ],
             [
                 'category_index' => 1, 'name' => 'PulseTab Pro 11',
                 'description' => 'Next-gen performance, ultra-thin. Tandem OLED display, ultra-wide Center Stage camera, 5G. Supports precision digital stylus.',
                 'price' => 899.00, 'sale_price' => null, 'stock' => 20, 'is_featured' => false,
+                'image' => $unsplash['tablet'], 'images' => [$unsplash['tablet'], $unsplash['tablet2'], $unsplash['tablet2']],
             ],
             [
                 'category_index' => 2, 'name' => 'PulseBuds Pro 2',
                 'description' => 'Richer audio, 2x Active Noise Cancellation. Adaptive Audio, Spatial Audio for deeply personal immersion.',
                 'price' => 249.00, 'sale_price' => 219.00, 'stock' => 100, 'is_featured' => true,
+                'image' => $unsplash['earbuds'], 'images' => [$unsplash['earbuds'], $unsplash['earbuds2'], $unsplash['earbuds2']],
             ],
             [
                 'category_index' => 2, 'name' => 'PulseMax Studio Wireless',
                 'description' => 'Over-ear headphones reimagined. Uncompromising fit, optimal acoustic seal, high-fidelity custom drivers.',
                 'price' => 549.00, 'sale_price' => 499.00, 'stock' => 12, 'is_featured' => true,
+                'image' => $unsplash['headphones'], 'images' => [$unsplash['headphones'], $unsplash['charger'], $unsplash['speaker']],
             ],
             [
                 'category_index' => 3, 'name' => 'PulseWatch Active 4',
                 'description' => 'Health companion. Blood oxygen, ECG, precision GPS, always-on OLED, aluminum casing, contactless payment.',
                 'price' => 399.00, 'sale_price' => null, 'stock' => 45, 'is_featured' => false,
+                'image' => $unsplash['watch'], 'images' => [$unsplash['watch'], $unsplash['watch2'], $unsplash['band']],
             ],
             // --- 10 New Products ---
             [
                 'category_index' => 0, 'name' => 'PulseBook Studio 14',
                 'description' => 'Built for creators. 14-inch mini-LED display with P3 wide color, M3 Pro chip, 18GB memory. Up to 17 hours battery. MagSafe charging, six-speaker system with spatial audio.',
                 'price' => 1999.00, 'sale_price' => 1799.00, 'stock' => 18, 'is_featured' => true,
+                'image' => $unsplash['laptop3'], 'images' => [$unsplash['laptop3'], $unsplash['laptop'], $unsplash['laptop2']],
             ],
             [
                 'category_index' => 0, 'name' => 'PulseDesk Mini',
                 'description' => 'M3 chip desktop powerhouse in a compact design. 16GB unified memory, 512GB SSD, Wi-Fi 6E. Connect up to two displays. Perfect for home office setups.',
                 'price' => 799.00, 'sale_price' => null, 'stock' => 40, 'is_featured' => false,
+                'image' => $unsplash['desktop'], 'images' => [$unsplash['desktop'], $unsplash['hub'], $unsplash['desktop']],
             ],
             [
                 'category_index' => 1, 'name' => 'PulsePhone 15',
                 'description' => 'The standard redefined. A17 chip, 48MP main camera, Ceramic Shield front. 6.1-inch Super Retina XDR display. All-day battery life and 5G.',
                 'price' => 899.00, 'sale_price' => 799.00, 'stock' => 35, 'is_featured' => true,
+                'image' => $unsplash['phone2'], 'images' => [$unsplash['phone2'], $unsplash['phone'], $unsplash['phone2']],
             ],
             [
                 'category_index' => 1, 'name' => 'PulsePad Air',
                 'description' => 'Lightweight powerhouse. 10.9-inch Liquid Retina display, M2 chip, Touch ID. Wi-Fi 6 and 5G optional. Works with Apple Pencil and Magic Keyboard.',
                 'price' => 649.00, 'sale_price' => null, 'stock' => 28, 'is_featured' => false,
+                'image' => $unsplash['tablet2'], 'images' => [$unsplash['tablet2'], $unsplash['tablet'], $unsplash['tablet2']],
             ],
             [
                 'category_index' => 2, 'name' => 'PulseBuds 3',
                 'description' => 'Everyday earbuds elevated. Active Noise Cancellation, Transparency mode, personalized spatial audio. 6-hour listening time, 30 hours with case.',
                 'price' => 179.00, 'sale_price' => 159.00, 'stock' => 80, 'is_featured' => false,
+                'image' => $unsplash['earbuds2'], 'images' => [$unsplash['earbuds2'], $unsplash['earbuds'], $unsplash['earbuds2']],
             ],
             [
                 'category_index' => 2, 'name' => 'PulseSound Bar',
                 'description' => 'Cinematic sound for your living room. Dolby Atmos, room-filling sound with seven drivers. Works with all your devices via HDMI eARC, Wi-Fi, Bluetooth.',
                 'price' => 699.00, 'sale_price' => 599.00, 'stock' => 15, 'is_featured' => true,
+                'image' => $unsplash['speaker'], 'images' => [$unsplash['speaker'], $unsplash['headphones'], $unsplash['charger']],
             ],
             [
                 'category_index' => 3, 'name' => 'PulseWatch Ultra 2',
                 'description' => 'The most rugged and capable smartwatch. 49mm titanium case, 2000-nit display, precision dual-frequency GPS. Depth gauge, water temperature, 36-hour battery.',
                 'price' => 799.00, 'sale_price' => null, 'stock' => 20, 'is_featured' => true,
+                'image' => $unsplash['watch2'], 'images' => [$unsplash['watch2'], $unsplash['watch'], $unsplash['band']],
             ],
             [
                 'category_index' => 3, 'name' => 'PulseBand SE',
                 'description' => 'Fitness meets affordability. Heart rate monitoring, sleep tracking, 18 types of workouts. Water resistant to 50m. 15-day battery life.',
                 'price' => 149.00, 'sale_price' => 129.00, 'stock' => 60, 'is_featured' => false,
+                'image' => $unsplash['band'], 'images' => [$unsplash['band'], $unsplash['watch'], $unsplash['watch2']],
             ],
             [
                 'category_index' => 4, 'name' => 'PulseChargPro 140W',
                 'description' => 'Charge everything at once. 140W GaN charger with 4 ports (2 USB-C, 2 USB-A). Compact design, foldable prongs. Charges MacBook Pro, iPhone, and iPad simultaneously.',
                 'price' => 89.00, 'sale_price' => 69.00, 'stock' => 120, 'is_featured' => false,
+                'image' => $unsplash['charger'], 'images' => [$unsplash['charger'], $unsplash['hub'], $unsplash['desktop']],
             ],
             [
                 'category_index' => 4, 'name' => 'PulseHub Ultra',
                 'description' => '11-in-1 USB-C hub. Dual HDMI 4K@60Hz, Ethernet, SD card, USB-A 3.0 ports, 100W passthrough charging. Aluminum body with built-in cable.',
                 'price' => 129.00, 'sale_price' => null, 'stock' => 65, 'is_featured' => false,
+                'image' => $unsplash['hub'], 'images' => [$unsplash['hub'], $unsplash['charger'], $unsplash['desktop']],
             ],
         ];
 
         foreach ($products as $prod) {
             $slug = Str::slug($prod['name']);
-            $gallery = collect([
-                "https://picsum.photos/seed/{$slug}/600/600",
-                "https://picsum.photos/seed/{$slug}-2/600/600",
-                "https://picsum.photos/seed/{$slug}-3/600/600",
-            ]);
 
             $product = Product::updateOrCreate(
                 ['slug' => $slug],
@@ -205,8 +249,8 @@ class DatabaseSeeder extends Seeder
                     'price' => $prod['price'],
                     'sale_price' => $prod['sale_price'],
                     'stock' => $prod['stock'],
-                    'image' => $gallery->first(),
-                    'images' => $gallery->toArray(),
+                    'image' => $prod['image'],
+                    'images' => $prod['images'],
                     'is_featured' => $prod['is_featured'],
                 ]
             );
@@ -223,7 +267,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // 5. Seed Orders with items
+        // 6. Seed Orders with items
         $allProducts = Product::all();
         $statuses = ['pending', 'processing', 'shipped', 'completed', 'cancelled'];
         $payments = ['pending', 'paid', 'paid', 'paid', 'failed'];
@@ -265,7 +309,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // 6. Seed Coupons
+        // 7. Seed Coupons
         $coupons = [
             ['code' => 'WELCOME10', 'type' => 'percentage', 'value' => 10, 'min_order' => 50, 'usage_limit' => 100, 'used_count' => 34, 'is_active' => true, 'expires_at' => now()->addMonths(6)],
             ['code' => 'SAVE50', 'type' => 'fixed', 'value' => 50, 'min_order' => 200, 'usage_limit' => 50, 'used_count' => 12, 'is_active' => true, 'expires_at' => now()->addMonths(3)],
@@ -280,7 +324,7 @@ class DatabaseSeeder extends Seeder
             Coupon::updateOrCreate(['code' => $c['code']], $c);
         }
 
-        // 7. Seed Subscribers
+        // 8. Seed Subscribers
         $subscribers = [
             ['email' => 'sarah@example.com', 'name' => 'Sarah Mitchell', 'is_active' => true, 'subscribed_at' => now()->subMonths(4)],
             ['email' => 'james@example.com', 'name' => 'James Wilson', 'is_active' => true, 'subscribed_at' => now()->subMonths(3)],
@@ -298,7 +342,7 @@ class DatabaseSeeder extends Seeder
             Subscriber::updateOrCreate(['email' => $s['email']], $s);
         }
 
-        // 8. Seed Settings
+        // 9. Seed Settings
         $settings = [
             ['key' => 'store_name', 'value' => 'PulseTrade', 'group' => 'store'],
             ['key' => 'store_email', 'value' => 'hello@pulsetrade.com', 'group' => 'store'],

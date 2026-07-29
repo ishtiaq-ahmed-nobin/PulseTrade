@@ -77,24 +77,44 @@ Route::get('/faq', function () {
     return view('faq');
 })->name('faq');
 
-// --- Dashboard ---
+// --- Dashboard (legacy Breeze redirect) ---
 Route::get('/dashboard', function () {
     if (auth()->check() && auth()->user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
     }
-    return view('dashboard');
+    return redirect()->route('user.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// --- Profile ---
+// --- User Dashboard ---
+Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/profile', [App\Http\Controllers\UserDashboardController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/password', [App\Http\Controllers\UserDashboardController::class, 'updatePassword'])->name('password.update');
+});
+
+// --- Profile (Breeze) ---
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// --- Admin Authentication ---
+Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'create'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'store'])->name('login');
+});
+
+Route::get('/admin', function () {
+    if (auth()->check() && auth()->user()->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('admin.login');
+})->name('admin.index');
+
 // --- Admin Panel ---
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('categories', CategoryController::class)->except(['show']);
 
