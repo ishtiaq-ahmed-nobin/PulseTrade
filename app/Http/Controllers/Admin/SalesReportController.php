@@ -177,7 +177,7 @@ class SalesReportController extends Controller
 
         $currencySymbol = Setting::get('store_currency', 'USD');
         $symbols = [
-            'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'JPY' => '¥', 'INR' => '₹',
+            'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'JPY' => '¥', 'INR' => '₹', 'BDT' => '৳',
         ];
         $currencySymbol = $symbols[strtoupper($currencySymbol)] ?? '$';
 

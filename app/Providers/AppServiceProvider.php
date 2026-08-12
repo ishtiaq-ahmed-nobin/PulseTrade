@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $symbols = [
-            'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'JPY' => '¥', 'INR' => '₹',
+            'USD' => '$', 'EUR' => '€', 'GBP' => '£', 'JPY' => '¥', 'INR' => '₹', 'BDT' => '৳',
             'CAD' => 'C$', 'AUD' => 'A$', 'CNY' => '¥', 'BRL' => 'R$', 'KRW' => '₩',
             'MXN' => 'Mex$', 'SEK' => 'kr', 'NOK' => 'kr', 'DKK' => 'kr', 'CHF' => 'CHF',
             'PLN' => 'zł', 'CZK' => 'Kč', 'ZAR' => 'R', 'SGD' => 'S$', 'HKD' => 'HK$',

@@ -27,6 +27,10 @@ class Order extends Model
         'discount_amount' => 'decimal:2',
     ];
 
+    protected $appends = [
+        'subtotal',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

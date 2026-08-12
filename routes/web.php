@@ -150,4 +150,44 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::patch('settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
+// --- React SPA entry (frontend/dist) ---
+// When the frontend is built, serve it at the base route and as a catch-all for
+// client-side routes. Existing Blade routes above still take priority.
+
 require __DIR__.'/auth.php';
+
+function spaResponse()
+{
+    $spaIndex = base_path('frontend/dist/index.html');
+
+    if (is_file($spaIndex)) {
+        return response(file_get_contents($spaIndex))->header('Content-Type', 'text/html');
+    }
+
+    return null;
+}
+
+Route::get('/', function () {
+    $spa = spaResponse();
+
+    if ($spa) {
+        return $spa;
+    }
+
+    $featured = Product::where('is_featured', true)->with('category')->limit(6)->get();
+    $bestSellers = Product::withCount('reviews')->with('category')->orderByDesc('reviews_count')->limit(4)->get();
+    $newArrivals = Product::latest()->with('category')->limit(4)->get();
+    $categories = Category::withCount('products')->get();
+
+    return view('home', compact('featured', 'bestSellers', 'newArrivals', 'categories'));
+});
+
+Route::get('/{any}', function () {
+    $spa = spaResponse();
+
+    if ($spa) {
+        return $spa;
+    }
+
+    abort(404);
+})->where('any', '.*');

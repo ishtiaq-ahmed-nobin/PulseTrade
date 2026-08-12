@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans antialiased bg-white text-slate-800;
+    }
+
+    .dark body {
+        @apply bg-brand-950 text-slate-200;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-slate-300 rounded-full;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+        @apply bg-brand-700;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .btn-primary {
+        @apply btn bg-brand-900 text-white hover:bg-brand-700 focus:ring-brand-500 px-5 py-2.5;
+    }
+
+    .dark .btn-primary {
+        @apply bg-brand-500 hover:bg-brand-400;
+    }
+
+    .btn-outline {
+        @apply btn border border-slate-300 text-slate-700 hover:border-brand-500 hover:text-brand-700 bg-white focus:ring-brand-400 px-5 py-2.5;
+    }
+
+    .dark .btn-outline {
+        @apply border-brand-700 text-slate-200 hover:border-brand-400 hover:text-brand-300 bg-brand-900;
+    }
+
+    .btn-accent {
+        @apply btn bg-sky-500 text-white hover:bg-sky-400 focus:ring-sky-400 px-5 py-2.5;
+    }
+
+    .btn-danger {
+        @apply btn bg-rose-600 text-white hover:bg-rose-500 focus:ring-rose-400 px-5 py-2.5;
+    }
+
+    .input {
+        @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200;
+    }
+
+    .dark .input {
+        @apply border-brand-700 bg-brand-900 text-slate-100 placeholder-slate-500 focus:ring-brand-700;
+    }
+
+    .card {
+        @apply bg-white border border-slate-200 rounded-2xl shadow-sm;
+    }
+
+    .dark .card {
+        @apply bg-brand-900 border-brand-800;
+    }
+
+    .badge {
+        @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    }
+
+    .section-title {
+        @apply text-2xl sm:text-3xl font-bold text-brand-900 dark:text-white;
+    }
+}

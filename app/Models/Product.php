@@ -29,6 +29,14 @@ class Product extends Model
         'sale_price' => 'decimal:2',
     ];
 
+    protected $appends = [
+        'image_url',
+        'gallery_urls',
+        'final_price',
+        'has_discount',
+        'stock_status',
+    ];
+
     /**
      * Get the final active price (sale price if exists, otherwise regular price).
      */
@@ -45,6 +53,23 @@ class Product extends Model
         return $this->sale_price !== null && $this->sale_price < $this->price;
     }
 
+    public function getHasDiscountAttribute(): bool
+    {
+        return $this->hasDiscount();
+    }
+
+    /**
+     * Stock badge helper: in_stock | low_stock | out_of_stock.
+     */
+    public function getStockStatusAttribute(): string
+    {
+        if ($this->stock <= 0) {
+            return 'out_of_stock';
+        }
+
+        return $this->stock < 5 ? 'low_stock' : 'in_stock';
+    }
+
     /**
      * Get the category that owns the product.
      */
@@ -59,6 +84,14 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get the order items for the product.
+     */
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
     public const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=600&q=80';
