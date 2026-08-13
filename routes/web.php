@@ -1,161 +1,83 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\CustomerController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\InventoryController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\SalesReportController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\SubscriberController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\CouponController as StorefrontCouponController;
-use App\Models\Category;
-use App\Models\Product;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-// --- Storefront ---
-Route::get('/', function () {
-    $featured = Product::where('is_featured', true)->with('category')->limit(6)->get();
-    $bestSellers = Product::withCount('reviews')->with('category')->orderByDesc('reviews_count')->limit(4)->get();
-    $newArrivals = Product::latest()->with('category')->limit(4)->get();
-    $categories = Category::withCount('products')->get();
+/*
+|--------------------------------------------------------------------------
+| SPA-First Routing
+|--------------------------------------------------------------------------
+|
+| The storefront, customer dashboard, and admin panel now live in the React
+| SPA under /frontend. Blade routes are kept ONLY for flows that still need a
+| server-rendered page (email verification / password reset links), and a
+| catch-all hands every other GET request to the built SPA so client-side
+| routes such as /login, /admin or /admin/dashboard survive hard refreshes
+| and deep links instead of returning a 404.
+|
+| API endpoints are registered separately in routes/api.php (they are added
+| to the router before these web routes, so /api/* always wins).
+|
+*/
 
-    return view('home', compact('featured', 'bestSellers', 'newArrivals', 'categories'));
+// Named 'login' route — keeps route('login') (used by the guest/auth redirect)
+// working while serving the React user login screen.
+Route::get('/login', function () {
+    return spaResponse();
+})->name('login');
+
+// --- Server-rendered email flows (still Blade) ---
+Route::middleware('guest')->group(function () {
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+        ->name('password.request');
+
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->name('password.email');
+
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('reset-password', [NewPasswordController::class, 'store'])
+        ->name('password.store');
 });
 
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::middleware('auth')->group(function () {
+    Route::get('verify-email', EmailVerificationPromptController::class)
+        ->name('verification.notice');
 
-Route::get('/shop/product/{product:slug}', function (Product $product) {
-    $product->load('category', 'reviews');
-    $gallery = $product->gallery_urls;
-    $reviews = $product->reviews()->with('user')->get();
-    $related = Product::where('category_id', $product->category_id)
-        ->where('id', '!=', $product->id)
-        ->with('category')
-        ->limit(3)
-        ->get();
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
 
-    return view('shop.show', compact('product', 'gallery', 'reviews', 'related'));
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+        ->name('password.confirm');
+
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
 });
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-Route::patch('/cart/{productId}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/{productId}', [CartController::class, 'destroy'])->name('cart.destroy');
-
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-Route::get('/checkout/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
-
-Route::post('/coupon/apply', [StorefrontCouponController::class, 'apply'])->name('coupon.apply');
-Route::post('/coupon/remove', [StorefrontCouponController::class, 'remove'])->name('coupon.remove');
-
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-
-Route::post('/contact', function () {
-    return redirect()->route('contact')->with('success', 'Thanks for reaching out! We\'ll get back to you within 24 hours.');
-});
-
-Route::get('/blog', function () {
-    return view('blog.index');
-})->name('blog');
-
-Route::get('/faq', function () {
-    return view('faq');
-})->name('faq');
-
-// --- Dashboard (legacy Breeze redirect) ---
+// --- Legacy dashboard alias — kept so route('dashboard') keeps resolving ---
 Route::get('/dashboard', function () {
     if (auth()->check() && auth()->user()->isAdmin()) {
-        return redirect()->route('admin.dashboard');
+        return redirect('/admin/dashboard');
     }
-    return redirect()->route('user.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-// --- User Dashboard ---
-Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('dashboard');
-    Route::post('/profile', [App\Http\Controllers\UserDashboardController::class, 'updateProfile'])->name('profile.update');
-    Route::post('/password', [App\Http\Controllers\UserDashboardController::class, 'updatePassword'])->name('password.update');
-});
+    return redirect('/profile');
+})->name('dashboard');
 
-// --- Profile (Breeze) ---
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-// --- Admin Authentication ---
-Route::middleware('guest')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'create'])->name('login');
-    Route::post('/login', [App\Http\Controllers\Auth\AdminAuthController::class, 'store']);
-});
-
-Route::get('/admin', function () {
-    if (auth()->check() && auth()->user()->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    }
-    return redirect('/admin/login');
-})->name('admin.index');
-
-// --- Admin Panel ---
-Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::resource('categories', CategoryController::class)->except(['show']);
-
-    Route::resource('products', ProductController::class)->except(['show']);
-
-    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
-
-    Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');
-    Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-
-    Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::delete('customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-
-    Route::get('reports/sales', [SalesReportController::class, 'index'])->name('reports.sales');
-    Route::get('reports/sales/csv', [SalesReportController::class, 'exportCsv'])->name('reports.sales.csv');
-    Route::get('reports/sales/pdf', [SalesReportController::class, 'exportPdf'])->name('reports.sales.pdf');
-
-    Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
-    Route::patch('inventory/{product}/stock', [InventoryController::class, 'updateStock'])->name('inventory.updateStock');
-
-    Route::get('coupons', [CouponController::class, 'index'])->name('coupons.index');
-    Route::post('coupons', [CouponController::class, 'store'])->name('coupons.store');
-    Route::patch('coupons/{coupon}/toggle', [CouponController::class, 'toggle'])->name('coupons.toggle');
-    Route::delete('coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
-
-    Route::get('subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
-    Route::patch('subscribers/{subscriber}/toggle', [SubscriberController::class, 'toggle'])->name('subscribers.toggle');
-    Route::delete('subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
-
-    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::patch('settings', [SettingController::class, 'update'])->name('settings.update');
-});
-
-// --- React SPA entry (frontend/dist) ---
-// When the frontend is built, serve it at the base route and as a catch-all for
-// client-side routes. Existing Blade routes above still take priority.
-
-require __DIR__.'/auth.php';
-
+// --- React SPA entry + history fallback ---
 function spaResponse()
 {
     $spaIndex = base_path('frontend/dist/index.html');
@@ -164,30 +86,13 @@ function spaResponse()
         return response(file_get_contents($spaIndex))->header('Content-Type', 'text/html');
     }
 
-    return null;
+    abort(404, 'Frontend build not found. Run `npm run build` inside frontend/.');
 }
 
 Route::get('/', function () {
-    $spa = spaResponse();
-
-    if ($spa) {
-        return $spa;
-    }
-
-    $featured = Product::where('is_featured', true)->with('category')->limit(6)->get();
-    $bestSellers = Product::withCount('reviews')->with('category')->orderByDesc('reviews_count')->limit(4)->get();
-    $newArrivals = Product::latest()->with('category')->limit(4)->get();
-    $categories = Category::withCount('products')->get();
-
-    return view('home', compact('featured', 'bestSellers', 'newArrivals', 'categories'));
+    return spaResponse();
 });
 
 Route::get('/{any}', function () {
-    $spa = spaResponse();
-
-    if ($spa) {
-        return $spa;
-    }
-
-    abort(404);
+    return spaResponse();
 })->where('any', '.*');

@@ -54,11 +54,57 @@ class AuthController extends Controller
             ]);
         }
 
+        // The standard user login endpoint is strictly for customers. Reject
+        // admin accounts (and do not leave them authenticated) so that admins
+        // must use the dedicated /auth/admin/login endpoint instead.
+        if (Auth::user()->isAdmin()) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Admins are not permitted to log in through this endpoint.',
+            ], 403);
+        }
+
         $request->session()->regenerate();
 
         return response()->json([
             'success' => true,
             'message' => 'Logged in successfully.',
+            'user' => $this->userPayload(Auth::user()),
+        ]);
+    }
+
+    public function adminLogin(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        if (! Auth::attempt($validated, $request->boolean('remember'))) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials do not match our records.'],
+            ]);
+        }
+
+        if (! Auth::user()->isAdmin()) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            throw ValidationException::withMessages([
+                'email' => ['These credentials do not have admin access.'],
+            ]);
+        }
+
+        $request->session()->regenerate();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logged in as administrator.',
             'user' => $this->userPayload(Auth::user()),
         ]);
     }

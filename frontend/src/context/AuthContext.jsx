@@ -28,7 +28,16 @@ export function AuthProvider({ children }) {
 
     const login = useCallback(async (credentials) => {
         const { data } = await api.post('/auth/login', credentials)
-        setUser(data.user)
+        return data
+    }, [])
+
+    const adminLogin = useCallback(async (credentials) => {
+        const { data } = await api.post('/auth/admin/login', credentials)
+        return data
+    }, [])
+
+    const saveSession = useCallback((data) => {
+        setUser(data?.user ?? null)
         return data
     }, [])
 
@@ -62,7 +71,10 @@ export function AuthProvider({ children }) {
         loading,
         isAuthenticated: Boolean(user),
         isAdmin: Boolean(user?.is_admin),
+        role: user?.role ?? null,
         login,
+        adminLogin,
+        saveSession,
         register,
         logout,
         refreshUser,

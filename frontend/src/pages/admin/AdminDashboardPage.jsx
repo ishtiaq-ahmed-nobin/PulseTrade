@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
     ShoppingBag,
     DollarSign,
@@ -93,7 +94,7 @@ export default function AdminDashboardPage() {
             <div className="card overflow-hidden">
                 <div className="flex items-center justify-between border-b border-slate-200 p-5 dark:border-brand-800">
                     <h2 className="font-bold text-brand-900 dark:text-white">Recent Orders</h2>
-                    <a href="/admin/orders" className="text-sm font-semibold text-sky-600 dark:text-sky-400">View all</a>
+                    <Link to="/admin/dashboard/orders" className="text-sm font-semibold text-sky-600 dark:text-sky-400">View all</Link>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">

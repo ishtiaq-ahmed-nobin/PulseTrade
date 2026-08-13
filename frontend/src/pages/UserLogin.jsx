@@ -3,8 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Mail, Lock, Eye, EyeOff, LogIn, AlertCircle } from 'lucide-react'
 import { useAuth, extractErrors } from '../context/AuthContext'
 
-export default function LoginPage() {
-    const { login } = useAuth()
+export default function UserLogin() {
+    const { login, saveSession } = useAuth()
     const navigate = useNavigate()
     const location = useLocation()
     const [form, setForm] = useState({ email: '', password: '', remember: false })
@@ -13,7 +13,7 @@ export default function LoginPage() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const from = location.state?.from || '/'
+    const from = location.state?.from || '/profile'
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -21,9 +21,22 @@ export default function LoginPage() {
         setError('')
         setLoading(true)
         try {
-            await login(form)
+            const data = await login(form)
+            const user = data.user
+
+            if (user?.is_admin || user?.role === 'admin') {
+                saveSession(null)
+                setError('Access Denied: Admin accounts must log in through /admin.')
+                return
+            }
+
+            saveSession(data)
             navigate(from, { replace: true })
         } catch (err) {
+            if (err?.response?.status === 403) {
+                setError('Access Denied: Admin accounts must log in through /admin.')
+                return
+            }
             const data = err.response?.data
             if (data?.errors) setErrors(data.errors)
             else setError(extractErrors(err, 'Unable to sign in.'))

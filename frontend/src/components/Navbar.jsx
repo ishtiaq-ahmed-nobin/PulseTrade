@@ -149,14 +149,14 @@ export default function Navbar() {
                                     </div>
                                     <div className="p-1.5">
                                         <Link
-                                            to="/account"
+                                            to="/profile"
                                             className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-brand-800"
                                         >
                                             <User size={16} /> My Account
                                         </Link>
                                         {isAdmin && (
                                             <Link
-                                                to="/admin"
+                                                to="/admin/dashboard"
                                                 className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-brand-800"
                                             >
                                                 <LayoutDashboard size={16} /> Admin Panel

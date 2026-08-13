@@ -36,6 +36,7 @@ Route::prefix('v1')->group(function () {
     // --- Auth (cookie session) ---
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
+    Route::post('/auth/admin/login', [AuthController::class, 'adminLogin']);
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth');
     Route::get('/auth/user', [AuthController::class, 'user'])->middleware('auth');
 

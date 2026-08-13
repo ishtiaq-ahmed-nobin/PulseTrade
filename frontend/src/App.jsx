@@ -14,7 +14,7 @@ import ShopPage from './pages/ShopPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
-import LoginPage from './pages/LoginPage'
+import UserLogin from './pages/UserLogin'
 import RegisterPage from './pages/RegisterPage'
 import UserDashboardPage from './pages/UserDashboardPage'
 import AboutPage from './pages/AboutPage'
@@ -24,6 +24,7 @@ import BlogPage from './pages/BlogPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminLogin from './pages/admin/AdminLogin'
 import AdminProductsPage from './pages/admin/AdminProductsPage'
 import AdminCategoriesPage from './pages/admin/AdminCategoriesPage'
 import AdminOrdersPage from './pages/admin/AdminOrdersPage'
@@ -44,9 +45,11 @@ function ScrollToTop() {
 }
 
 function GuestRoute({ children }) {
-    const { isAuthenticated, loading } = useAuth()
+    const { isAuthenticated, isAdmin, loading } = useAuth()
     if (loading) return null
-    if (isAuthenticated) return <Navigate to="/" replace />
+    if (isAuthenticated) {
+        return <Navigate to={isAdmin ? '/admin/dashboard' : '/profile'} replace />
+    }
     return children
 }
 
@@ -69,21 +72,44 @@ export default function App() {
                                 <Route path="/faq" element={<FaqPage />} />
                                 <Route path="/blog" element={<BlogPage />} />
 
-                                <Route path="/login" element={<GuestRoute><AuthLayout><LoginPage /></AuthLayout></GuestRoute>} />
+                                <Route path="/login" element={<GuestRoute><AuthLayout><UserLogin /></AuthLayout></GuestRoute>} />
                                 <Route path="/register" element={<GuestRoute><AuthLayout><RegisterPage /></AuthLayout></GuestRoute>} />
 
                                 <Route
-                                    path="/account"
+                                    path="/profile"
                                     element={
                                         <ProtectedRoute>
                                             <UserDashboardPage />
                                         </ProtectedRoute>
                                     }
                                 />
+                                <Route
+                                    path="/dashboard"
+                                    element={
+                                        <ProtectedRoute>
+                                            <UserDashboardPage />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                                <Route path="/account" element={<Navigate to="/profile" replace />} />
                             </Route>
 
+                            {/* Admin authentication */}
                             <Route
                                 path="/admin"
+                                element={
+                                    <GuestRoute>
+                                        <AuthLayout>
+                                            <AdminLogin />
+                                        </AuthLayout>
+                                    </GuestRoute>
+                                }
+                            />
+                            <Route path="/admin/login" element={<Navigate to="/admin" replace />} />
+
+                            {/* Admin panel */}
+                            <Route
+                                path="/admin/dashboard"
                                 element={
                                     <ProtectedRoute adminOnly>
                                         <AdminLayout />

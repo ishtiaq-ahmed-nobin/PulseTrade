@@ -26,37 +26,37 @@ import { useAuth } from '../context/AuthContext'
 const NAV_GROUPS = [
     {
         label: 'Orders & Fulfillment',
-        items: [{ label: 'Orders', to: '/admin/orders', icon: ShoppingBag }],
+        items: [{ label: 'Orders', to: '/admin/dashboard/orders', icon: ShoppingBag }],
     },
     {
         label: 'Inventory & Stock',
         items: [
-            { label: 'Products', to: '/admin/products', icon: Package },
-            { label: 'Inventory', to: '/admin/inventory', icon: Boxes },
-            { label: 'Categories', to: '/admin/categories', icon: Tags },
+            { label: 'Products', to: '/admin/dashboard/products', icon: Package },
+            { label: 'Inventory', to: '/admin/dashboard/inventory', icon: Boxes },
+            { label: 'Categories', to: '/admin/dashboard/categories', icon: Tags },
         ],
     },
     {
         label: 'Analytics & Reports',
-        items: [{ label: 'Sales Report', to: '/admin/reports', icon: BarChart3 }],
+        items: [{ label: 'Sales Report', to: '/admin/dashboard/reports', icon: BarChart3 }],
     },
     {
         label: 'Marketing & Promotions',
         items: [
-            { label: 'Coupons', to: '/admin/coupons', icon: TicketPercent },
-            { label: 'Subscribers', to: '/admin/subscribers', icon: Mail },
+            { label: 'Coupons', to: '/admin/dashboard/coupons', icon: TicketPercent },
+            { label: 'Subscribers', to: '/admin/dashboard/subscribers', icon: Mail },
         ],
     },
     {
         label: 'User Management',
         items: [
-            { label: 'Customers', to: '/admin/customers', icon: Users },
-            { label: 'Reviews', to: '/admin/reviews', icon: Star },
+            { label: 'Customers', to: '/admin/dashboard/customers', icon: Users },
+            { label: 'Reviews', to: '/admin/dashboard/reviews', icon: Star },
         ],
     },
     {
         label: 'System & Settings',
-        items: [{ label: 'Settings', to: '/admin/settings', icon: SettingsIcon }],
+        items: [{ label: 'Settings', to: '/admin/dashboard/settings', icon: SettingsIcon }],
     },
 ]
 
@@ -84,7 +84,7 @@ export default function AdminLayout() {
 
     async function handleLogout() {
         await logout()
-        navigate('/')
+        navigate('/admin')
     }
 
     const sidebar = (
@@ -111,7 +111,7 @@ export default function AdminLayout() {
             <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-5">
                 <p className="mb-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500">Admin Panel</p>
                 <NavLink
-                    to="/admin"
+                    to="/admin/dashboard"
                     end
                     className={({ isActive }) =>
                         `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
