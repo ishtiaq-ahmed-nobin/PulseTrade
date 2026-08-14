@@ -60,7 +60,7 @@ export default function ShopPage() {
             if (value === '' || value === null || value === undefined) params.delete(key)
             else params.set(key, value)
         }
-        params.delete('page')
+        if (!('page' in next)) params.delete('page')
         setSearchParams(params)
     }
 
