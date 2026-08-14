@@ -14,7 +14,7 @@ const POSTS = [
         slug: 'true-wireless-earbuds-guide',
         title: 'A Beginner\'s Guide to True Wireless Earbuds',
         excerpt: 'ANC, battery life, codecs — everything you need to pick the perfect pair.',
-        image: 'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=800&q=80',
+        image: 'https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?auto=format&fit=crop&w=800&q=80',
         date: '2026-07-18',
     },
     {

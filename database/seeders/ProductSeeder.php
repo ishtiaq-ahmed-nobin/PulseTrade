@@ -31,7 +31,7 @@ class ProductSeeder extends Seeder
             'https://images.unsplash.com/photo-1527698266440-12104e498b76?auto=format&fit=crop&w=600&q=80',
         ],
         'earbuds' => [
-            'https://images.unsplash.com/photo-1590658268037-6bf12f032f55?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=600&q=80',
         ],
         'headphones' => [

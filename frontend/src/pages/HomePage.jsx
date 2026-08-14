@@ -85,7 +85,7 @@ export default function HomePage() {
                     </div>
                     <div className="relative hidden lg:block">
                         <img
-                            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80"
+                            src="https://images.unsplash.com/photo-1783743962099-2944190bae0e?auto=format&fit=crop&w=900&q=80"
                             alt="Premium electronics"
                             className="rounded-3xl border border-white/10 shadow-2xl"
                         />

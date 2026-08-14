@@ -90,7 +90,7 @@ function spaResponse()
 }
 
 Route::get('/', function () {
-    return spaResponse();
+    return view('welcome');
 });
 
 Route::get('/{any}', function () {
