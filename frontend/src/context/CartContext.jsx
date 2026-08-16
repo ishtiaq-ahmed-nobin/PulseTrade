@@ -90,7 +90,7 @@ export function CartProvider({ children }) {
     }, [])
 
     const clearCart = useCallback(() => setItems([]), [])
-
+    // cart subtotal
     const summary = useMemo(() => {
         const subtotal = items.reduce(
             (sum, item) => sum + Number(item.product.final_price ?? item.product.price ?? 0) * item.quantity,

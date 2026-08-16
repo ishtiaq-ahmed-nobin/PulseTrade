@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
+    //order controller    
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([

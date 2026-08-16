@@ -12,6 +12,7 @@ class CouponController extends Controller
 {
     public function validate(Request $request): JsonResponse
     {
+        // coupon apply
         $validated = $request->validate([
             'coupon_code' => ['required', 'string', 'max:50'],
             'subtotal' => ['required', 'numeric', 'min:0'],

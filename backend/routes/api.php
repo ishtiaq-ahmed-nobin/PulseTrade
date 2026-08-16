@@ -41,6 +41,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/auth/user', [AuthController::class, 'user'])->middleware('auth');
 
     // --- Checkout (guest checkout supported; a user account is created if needed) ---
+    // order api 
     Route::post('/checkout', [CheckoutController::class, 'store']);
     Route::post('/coupon/validate', [CouponController::class, 'validate']);
 

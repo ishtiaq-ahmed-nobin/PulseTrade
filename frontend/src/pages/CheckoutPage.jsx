@@ -43,7 +43,7 @@ export default function CheckoutPage() {
                     cost: Number(data.settings.shipping_cost || 9.99),
                 })
             })
-            .catch(() => {})
+            .catch(() => { })
 
         if (user) {
             setForm((f) => ({
@@ -65,7 +65,7 @@ export default function CheckoutPage() {
     if (items.length === 0 && !success) {
         return null
     }
-
+    // checkout subtotal
     const shippingCost = subtotal >= shipping.free_threshold ? 0 : shipping.cost
     const total = Math.max(0, subtotal + shippingCost - discount)
 
@@ -114,6 +114,7 @@ export default function CheckoutPage() {
                     quantity: item.quantity,
                 })),
             }
+            // order data pass
             const { data } = await api.post('/checkout', payload)
             clearCart()
             setSuccess(data.message)
@@ -204,11 +205,10 @@ export default function CheckoutPage() {
                             <button
                                 type="button"
                                 onClick={() => update('payment_method', 'cod')}
-                                className={`rounded-xl border-2 p-4 text-left transition-colors ${
-                                    form.payment_method === 'cod'
-                                        ? 'border-brand-600 bg-brand-50 dark:border-sky-400 dark:bg-brand-800'
-                                        : 'border-slate-200 hover:border-slate-300 dark:border-brand-800'
-                                }`}
+                                className={`rounded-xl border-2 p-4 text-left transition-colors ${form.payment_method === 'cod'
+                                    ? 'border-brand-600 bg-brand-50 dark:border-sky-400 dark:bg-brand-800'
+                                    : 'border-slate-200 hover:border-slate-300 dark:border-brand-800'
+                                    }`}
                             >
                                 <Banknote size={22} className="mb-2 text-brand-700 dark:text-sky-400" />
                                 <p className="font-semibold text-brand-900 dark:text-white">Cash on Delivery</p>
@@ -217,11 +217,10 @@ export default function CheckoutPage() {
                             <button
                                 type="button"
                                 onClick={() => update('payment_method', 'card')}
-                                className={`rounded-xl border-2 p-4 text-left transition-colors ${
-                                    form.payment_method === 'card'
-                                        ? 'border-brand-600 bg-brand-50 dark:border-sky-400 dark:bg-brand-800'
-                                        : 'border-slate-200 hover:border-slate-300 dark:border-brand-800'
-                                }`}
+                                className={`rounded-xl border-2 p-4 text-left transition-colors ${form.payment_method === 'card'
+                                    ? 'border-brand-600 bg-brand-50 dark:border-sky-400 dark:bg-brand-800'
+                                    : 'border-slate-200 hover:border-slate-300 dark:border-brand-800'
+                                    }`}
                             >
                                 <CreditCard size={22} className="mb-2 text-brand-700 dark:text-sky-400" />
                                 <p className="font-semibold text-brand-900 dark:text-white">Pay with Card</p>
