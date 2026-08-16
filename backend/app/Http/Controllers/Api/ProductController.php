@@ -83,9 +83,10 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
-
+                
     public function show(Product $product): JsonResponse
     {
+        // product load
         $product->load('category', 'reviews.user');
 
         $related = Product::where('category_id', $product->category_id)
