@@ -7,6 +7,7 @@ export const STORAGE_BASE_URL =
     import.meta.env.VITE_STORAGE_BASE_URL || window.location.origin + '/storage'
 
 const api = axios.create({
+    // laravel call
     baseURL: API_BASE_URL + '/v1',
     withCredentials: true,
     headers: {

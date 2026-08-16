@@ -80,6 +80,7 @@ Route::get('/dashboard', function () {
 // --- React SPA entry + history fallback ---
 function spaResponse()
 {
+    // react called
     $spaIndex = base_path('frontend/dist/index.html');
 
     if (is_file($spaIndex)) {
