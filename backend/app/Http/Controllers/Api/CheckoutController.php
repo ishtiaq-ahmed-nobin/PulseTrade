@@ -63,7 +63,7 @@ class CheckoutController extends Controller
                 'user_id' => $user->id,
                 'order_number' => $this->makeOrderNumber(),
                 'status' => 'pending',
-                'total_amount' => $items['total'],
+                'total_amount' => max(0, $items['total'] - $discount),
                 'shipping_address' => $validated['address'] . ', ' . $validated['city'] . ' ' . $validated['postal_code'],
                 'shipping_phone' => $validated['phone'],
                 'payment_method' => $validated['payment_method'] === 'card' ? 'stripe' : 'cod',
